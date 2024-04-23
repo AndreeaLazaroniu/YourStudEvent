@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Jacquard+24&family=Noto+Sans+JP:wght@100..900&family=Sedan:ital@0;1&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #edf2f4;
+}
+
+code {
+    font-family: 'Sedan', sans-serif;
+}
+
+.role {
+    display: flex;
+    flex-direction: column; /* Organize content in a column */
+    align-items: center; /* Center items horizontally */
+    padding: 80px;
+    background-color: #ffffff; /* Light grey background */
+    border-radius: 10px;
+}
+
+.role-heading {
+    text-align: center;
+    color: #282828; /* Dark grey color for text */
+    font-size: 36px; /* Larger font size for headline */
+    margin-bottom: 30px; /* More space below the headline */
+}
+
+.role-buttons {
+    display: flex;
+    justify-content: center; /* Center buttons horizontally */
+    flex-wrap: wrap; /* Wrap buttons to the next line if they don't fit */
+}
+
+button {
+    display: flex;
+    flex-direction: column; /* Organize content in a column inside the button */
+    align-items: center; /* Center items inside the button */
+    margin: 20px;
+    padding: 70px;
+    border: none;
+    border-radius: 8px;
+    background-color: #ffffff; /* Blue background */
+    color: #000000;
+    font-size: 22px; /* Larger font size for button text */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    text-align: center; /* Center the text inside the button */
+}
+
+button:hover {
+    background-color: #EDF2F4; /* Darker blue on hover */
+}
+
+.img {
+    width: 200px; /* Larger image size */
+    height: 200px;
+    margin-bottom: 10px; /* Margin below the image */
+}

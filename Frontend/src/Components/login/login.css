@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Jacquard+24&family=Noto+Sans+JP:wght@100..900&family=Sedan:ital@0;1&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #edf2f4;
+}
+
+code {
+    font-family: 'Sedan', sans-serif;
+}
+
+.login {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px 40px;
+}
+
+.login .logo {
+    font-size: 2.5em;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo .img {
+    width: 400px;
+    height: 150px;
+}
+
+.login .login-heading {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.login .input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border-radius: 40px;
+    font-size: 16px;
+    color: black;
+    padding: 20px 45px 20px 20px;
+}
+
+.input-box input::placeholder {
+    color: #aaa;
+    font-size: 16px;
+}
+
+.input-box .icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+}
+
+.login .remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    margin: -15px 0 15px;
+}
+
+.remember-forgot label input {
+    accent-color: #EDF2F4;
+    margin-right: 4px;
+}
+
+.remember-forgot a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+.button {
+    width: 350px;
+    height: 100px;
+    background: #edf2f4;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #3498db;
+    font-weight: 700;
+}
+
+.login .button:hover {
+    background: #3498db;
+    color: #edf2f4;
+}
+.login .register-link {
+    font-size: 15px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.register-link p a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-link p a:hover {
+    text-decoration: underline;
+}
