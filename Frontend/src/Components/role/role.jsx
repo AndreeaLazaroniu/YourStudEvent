@@ -9,11 +9,11 @@ export const Role = () => {
     const navigate = useNavigate();
 
     const navigateToStudentRegister = () => {
-        navigate('../register/student-register.jsx');
+        navigate('../register/StudentRegister');
     };
 
     const navigateToOrganizerRegister = () => {
-        navigate('../register/organizer-register.jsx');
+        navigate('../register/OrganizerRegister');
     };
 
     return (
@@ -32,3 +32,5 @@ export const Role = () => {
         </div>
     );
 }
+
+export default Role;

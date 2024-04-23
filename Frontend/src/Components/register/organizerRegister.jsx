@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './organizerRegister.css';
+import { useNavigate } from 'react-router-dom';
 
 export const OrganizerRegister = () => {
     const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        verifyPassword: '',
-        phoneNumber: '',
-        address: ''
+        Name: '',
+        Password: '',
+        Email: '',
+        VerifyPassword: '',
+        PhoneNumber: '',
+        Address: ''
     });
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -23,21 +25,21 @@ export const OrganizerRegister = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (formData.password !== formData.verifyPassword) {
+        if (formData.Password !== formData.VerifyPassword) {
             setError('Passwords do not match.');
             return;
         }
 
         try {
             const response = await axios.post('https://localhost:44320/api/Auth/organizerRegister', {
-                name: formData.name,
-                email: formData.email,
-                password: formData.password, // In a real app, make sure to encrypt the password before sending
-                phoneNumber: formData.phoneNumber,
-                address: formData.address
+                Name: formData.Name,
+                Email: formData.Email,
+                PhoneNumber: formData.PhoneNumber,
+                Address: formData.Address,
+                Password: formData.Password
             });
             console.log(response.data);
-            // Handle response / navigate to login / show success message
+            navigate('../../login');
         } catch (err) {
             console.error(err);
             setError('An error occurred while registering.');
@@ -48,13 +50,13 @@ export const OrganizerRegister = () => {
         <div className="organizerRegister">
             <h2 className="organizerRegister-heading">Organizer Registration</h2>
             {error && <p>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="Name" required />
-                <input type="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="Email" required />
-                <input type="password" name="password" value={formData.password} onChange={handleInputChange} placeholder="Password" required />
-                <input type="password" name="verifyPassword" value={formData.verifyPassword} onChange={handleInputChange} placeholder="Verify Password" required />
-                <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleInputChange} placeholder="Phone Number" required />
-                <textarea name="address" value={formData.address} onChange={handleInputChange} placeholder="Address" required />
+            <form className="organizerRegister-form" onSubmit={handleSubmit}>
+                <input type="text" name="Name" value={formData.Name} onChange={handleInputChange} placeholder="Name" required />
+                <input type="email" name="Email" value={formData.Email} onChange={handleInputChange} placeholder="Email" required />
+                <input type="password" name="Password" value={formData.Password} onChange={handleInputChange} placeholder="Password" required />
+                <input type="password" name="VerifyPassword" value={formData.VerifyPassword} onChange={handleInputChange} placeholder="Verify Password" required />
+                <input type="tel" name="PhoneNumber" value={formData.PhoneNumber} onChange={handleInputChange} placeholder="Phone Number" required />
+                <textarea name="Address" value={formData.Address} onChange={handleInputChange} placeholder="Address" required />
                 <button type="submit">Register</button>
             </form>
         </div>
