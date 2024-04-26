@@ -32,7 +32,7 @@ public class AuthenticationService : IAuthenticationService
         return BCrypt.Net.BCrypt.Verify(enteredPassword, storedHash);
     }
 
-    public async Task<bool> RegisterStudentUserAsync(StudentRegistrationModel model)
+    public async Task<bool> RegisterStudentUserAsync(StudUser model)
     {
         var existingUser = await _context.Students.FirstOrDefaultAsync(u => u.Email == model.Email);
         if (existingUser != null)
@@ -48,7 +48,7 @@ public class AuthenticationService : IAuthenticationService
         return true;
     }
 
-    public async Task<bool> RegisterOrganizerUserAsync(OrganizerRegistrationModel model)
+    public async Task<bool> RegisterOrganizerUserAsync(OrgUser model)
     {
         var existingUser = await _context.Organizers.FirstOrDefaultAsync(u => u.Email == model.Email);
         if (existingUser != null)

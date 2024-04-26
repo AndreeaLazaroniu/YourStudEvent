@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using BEYourStudEvent2.Entities;
 
 namespace BEYourStudEvent2.Models;
 

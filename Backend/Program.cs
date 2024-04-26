@@ -1,5 +1,6 @@
 using BEYourStudEvent2.Services;
 using BEYourStudEvent2.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,11 +16,15 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<YSEDBContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("YourStudEventContext");
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseSqlServer(connectionString);
 });
 
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<YSEDBContext>();
+
 // builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+// builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddCors(options =>  
 {  
       
@@ -41,6 +46,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// app.MapIdentityApi<IdentityUser>();
 
 app.UseHttpsRedirection();
 

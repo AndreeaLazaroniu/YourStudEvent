@@ -8,8 +8,8 @@ public interface IAuthenticationService
 {
     // User Authenticate(string email, string password);
     // string GenerateJwtToken(User user);
-    Task<bool> RegisterStudentUserAsync(StudentRegistrationModel model);
-    Task<bool> RegisterOrganizerUserAsync(OrganizerRegistrationModel model);
+    Task<bool> RegisterStudentUserAsync(StudUser model);
+    Task<bool> RegisterOrganizerUserAsync(OrgUser model);
     Task<bool> LoginUserAsync(string email, string password);
     public string HashPassword(string password);
     public bool VerifyPassword(string enteredPassword, string storedHash);

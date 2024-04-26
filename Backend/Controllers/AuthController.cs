@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BEYourStudEvent2.Models;
 using BEYourStudEvent2.Services;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using BEYourStudEvent2.Entities;
 
 //TODOerror handling and exceptions
 namespace BEYourStudEvent2.Controllers
@@ -37,7 +37,7 @@ namespace BEYourStudEvent2.Controllers
         // }
         
         [HttpPost("studentRegister")]
-        public async Task<IActionResult> studentRegister([FromBody] StudentRegistrationModel model)
+        public async Task<IActionResult> studentRegister([FromBody] StudUser model)
         {
             if (ModelState.IsValid)
             {
@@ -51,7 +51,7 @@ namespace BEYourStudEvent2.Controllers
         }
         
         [HttpPost("organizerRegister")]
-        public async Task<IActionResult> organizerRegister([FromBody] OrganizerRegistrationModel model)
+        public async Task<IActionResult> organizerRegister([FromBody] OrgUser model)
         {
             if (ModelState.IsValid)
             {
