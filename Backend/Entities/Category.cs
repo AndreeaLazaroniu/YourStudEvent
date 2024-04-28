@@ -1,7 +1,8 @@
-namespace BEYourStudEvent2.Entities;
+namespace BEYourStudEvents.Entities;
 
 public class Category
 {
-    public int Id { get; set; }
-    public String Name { get; set; } = String.Empty;
+    public int CatId { get; set; }
+    public string Name { get; set; } = String.Empty;
+    public ICollection<Event> Events { get; set; } = new HashSet<Event>();
 }

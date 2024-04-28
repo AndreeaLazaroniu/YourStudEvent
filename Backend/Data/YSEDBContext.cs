@@ -1,19 +1,41 @@
-using BEYourStudEvent2.Entities;
-using BEYourStudEvent2.Models;
-using Microsoft.EntityFrameworkCore;
+using BEYourStudEvents.Configurations;
+using BEYourStudEvents.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
-namespace BEYourStudEvent2.Data;
+namespace BEYourStudEvents.Data;
 
-public class YSEDBContext : IdentityDbContext
+public class YSEDBContext : IdentityDbContext<AppUser>
 {
-    public YSEDBContext(DbContextOptions<YSEDBContext> dbContextOptions) : base(dbContextOptions)
+    public YSEDBContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
     {
         
     }
     
-    public DbSet<StudUser> Students { get; set; }
-    public DbSet<OrgUser> Organizers { get; set; }
-    public DbSet<Event> Events { get; set; }
-    public DbSet<Category> Categories { get; set; }
+    public DbSet<Category> Categories { get; set; } = null!;
+    public DbSet<Event> Events { get; set; } = null!;
+    
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        
+        new CategoryConfiguration().Configure(builder.Entity<Category>());
+        new EventConfiguration().Configure(builder.Entity<Event>());
+        
+        List<IdentityRole> roles = new List<IdentityRole>
+        {
+            new IdentityRole
+            {
+                Name = "Organizer",
+                NormalizedName = "ORGANIZER"
+            },
+            new IdentityRole
+            {
+                Name = "Student",
+                NormalizedName = "STUDENT"
+            },
+        };
+        builder.Entity<IdentityRole>().HasData(roles);
+    }
 }

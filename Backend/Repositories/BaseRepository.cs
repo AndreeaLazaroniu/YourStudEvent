@@ -1,7 +1,7 @@
-using BEYourStudEvent2.Data;
+using BEYourStudEvents.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace BEYourStudEvent2.Repositories;
+namespace BEYourStudEvents.Repositories;
 
 public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
 {
@@ -25,6 +25,18 @@ public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : clas
     }
     
     public virtual async Task<TEntity?> FindByIdAsync(int id)
+    {
+        try
+        {
+            return await _context.Set<TEntity>().FindAsync(id);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error when retrieving entity by id {id}, {ex.Message}", ex);
+        }
+    }
+    
+    public virtual async Task<TEntity?> FindUserByIdAsync(String id)
     {
         try
         {
