@@ -3,6 +3,7 @@ import axios from "axios";
 import './role.css';
 import participant from '../../Assets/participant.png';
 import organizer from '../../Assets/organizer.png';
+import collage_events from '../../Assets/collage-events.png';
 import { useNavigate} from "react-router-dom";
 
 export const Role = () => {
@@ -17,19 +18,33 @@ export const Role = () => {
     };
 
     return (
-        <div className="role">
-            <h1 className="role-heading">Please choose your role</h1>
-            <div className="role-buttons">
-                <button type="submit" className="student-button" onClick={navigateToStudentRegister}>
-                    <img id="student" src={participant} className="img" alt="Student"/>
-                    <p>Student</p>
-                </button>
-                <button type="submit" className="organizer-button" onClick={navigateToOrganizerRegister}>
-                    <img id="organizer" src={organizer} className="img" alt="Organizer"/>
-                    <p>Organizer</p>
-                </button>
+        <body className="main" style={
+            {backgroundImage: `url(${collage_events})`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            height: "100vh",
+            width: "100vw",
+            position: "fixed",
+            top: "0"
+            }
+        }>
+            <div className="role-page" >
+                <div className="role">
+                    <h1 className="role-heading">Please choose your role</h1>
+                    <div className="role-buttons">
+                        <button type="submit" className="student-button" onClick={navigateToStudentRegister}>
+                            <img id="student" src={participant} className="imgRole" alt="Student"/>
+                            <p>Student</p>
+                        </button>
+                        <button type="submit" className="organizer-button" onClick={navigateToOrganizerRegister}>
+                            <img id="organizer" src={organizer} className="imgRole" alt="Organizer"/>
+                            <p>Organizer</p>
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
+        </body>
     );
 }
 

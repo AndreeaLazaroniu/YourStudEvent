@@ -1,0 +1,13 @@
+.testimonials-container {
+    padding: 40px 0;
+    background-color: #e9ecef; /* Light grey background for testimonials */
+}
+
+.accordion-button {
+    background-color: #fff; /* White background for accordion headers */
+    color: #333; /* Dark text for readability */
+}
+
+.accordion-body {
+    font-style: italic; /* Italicize testimonials */
+}

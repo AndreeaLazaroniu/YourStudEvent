@@ -1,0 +1,9 @@
+.register-container {
+    padding: 40px 0;
+    background-color: #007bff; /* Blue background for emphasis */
+    color: white; /* White text for contrast */
+}
+
+.form-label, .form-text {
+    color: white; /* Ensures all text is visible against the blue background */
+}

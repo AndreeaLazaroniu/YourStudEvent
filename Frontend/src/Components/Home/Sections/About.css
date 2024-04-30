@@ -1,0 +1,15 @@
+.about-container {
+    padding: 40px 0;
+    background-color: #f8f9fa; /* Light background for the about section */
+}
+
+.about-text {
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.carousel-item img {
+    height: 500px; /* Fixed height for images */
+    object-fit: cover; /* Ensures images cover the area properly without distortion */
+}
