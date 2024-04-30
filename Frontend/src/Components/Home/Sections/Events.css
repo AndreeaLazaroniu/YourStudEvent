@@ -1,10 +1,10 @@
 .events-container {
     padding: 40px 0;
-    background-color: #fff; /* White background for clarity */
+    background-color: #ffffff; /* White background for clarity */
 }
 
 .card {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds subtle shadows to cards */
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.1); /* Adds subtle shadows to cards */
 }
 
 .card-img-top {

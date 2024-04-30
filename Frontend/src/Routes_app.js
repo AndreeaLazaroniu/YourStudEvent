@@ -7,6 +7,8 @@ import {MyProfile} from './Components/myProfile/myProfile.jsx';
 import {Layout} from './Components/Header&Footer/Layout.jsx';
 import {Home} from "./Components/Home/home";
 import {CreateEvent} from "./Components/Event/CreateEvent";
+import {AboutPage} from "./Components/About/AboutPage";
+import {EventsPage} from "./Components/Events/EventsPage";
 
 export const Routes_app = () => {
     return (
@@ -20,6 +22,8 @@ export const Routes_app = () => {
                     <Route path="/myProfile" element={<MyProfile />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/createEvent" element={<CreateEvent />} />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="/events" element={<EventsPage />} />
                 </Routes>
             </Layout>
         </Router>

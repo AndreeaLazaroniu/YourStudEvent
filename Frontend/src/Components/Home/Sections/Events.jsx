@@ -1,6 +1,7 @@
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import React from 'react';
 import './Events.css';
+import imgEvent from '../../../Assets/IMG_6920.jpg';
 
 export const Events = () => {
     const [events, setEvents] = React.useState([]);
@@ -24,10 +25,11 @@ export const Events = () => {
                 {events.map((event, Id) => (
                     <Col key={Id}>
                         <Card>
-                            <Card.Img variant="top" src={event.image} />
+                            <Card.Img variant="top" src={imgEvent} />
                             <Card.Body>
-                                <Card.Title>{event.Title}</Card.Title>
-                                <Card.Text>{event.Description}</Card.Text>
+                                <Card.Title>{event.title}</Card.Title>
+                                <Card.Text>{event.description}</Card.Text>
+                                <Card.Text>{event.price}</Card.Text>
                             </Card.Body>
                         </Card>
                     </Col>

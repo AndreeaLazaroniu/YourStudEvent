@@ -45,7 +45,7 @@ export const Login = () => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${result.token}`;
 
             if(response.status){
-                navigate('../createEvent');
+                navigate('../myProfile');
             }
         }catch (e) {
             if (error.response) {

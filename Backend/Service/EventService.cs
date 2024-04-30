@@ -28,7 +28,8 @@ public class EventService : IEventService
             Location = e.Location,
             Price = e.Price,
             Status = e.Status,
-            // ImageFile= e.ImageFile
+            ImageId = e.ImageId,
+            CatId = e.CatId
         });
 
         return eventDtos;

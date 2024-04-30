@@ -5,12 +5,12 @@ import {Testimonials} from './Sections/Testimonials';
 
 export const Home = () => {
     return (
-        <div className="Home">
+        <main className="mainHome">
             <About />
             <Events />
             <RegisterSection />
             <Testimonials />
-        </div>
+        </main>
     );
 }
 

@@ -27,11 +27,12 @@ public class EventsControllers : ControllerBase
     }
     
     [HttpGet("GetEvents")]
-    public async Task<IActionResult> GetEvents()
+    public async Task<IEnumerable<EventDto>> GetEvents()
     {
         var events = await _eventService.GetEventsAsync();
-
-        return Ok(events);
+        
+        return events;
+        //return Ok(events);
     }
     
     [HttpGet("GetStudents/{eventId}", Name = "GetStudents")]

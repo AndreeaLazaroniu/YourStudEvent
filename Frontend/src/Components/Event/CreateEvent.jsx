@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import axios from "axios";
+import { Form, Button, Container } from 'react-bootstrap';
+import './CreateEvent.css';
+import { useNavigate} from "react-router-dom";
 
 export const CreateEvent = () => {
     // State to hold form data
@@ -13,6 +16,8 @@ export const CreateEvent = () => {
     const [imageId, setImageId] = useState('0');
     const [orgUserId, setOrgUserId] = useState('0');
     const [file, setFile] = useState(null);
+    const navigate = useNavigate();
+    const [error, setError] = useState('');
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -50,10 +55,6 @@ export const CreateEvent = () => {
         }
     };
 
-    const handleFileChange = (event) => {
-        setFile(event.target.files[0]);
-    };
-
     const handleImageChange = async (event) => {
         const selectedFile = event.target.files[0];
         setFile(selectedFile);
@@ -80,50 +81,91 @@ export const CreateEvent = () => {
             imageId,
             orgUserId
         });
-        //
-        // const formData = new FormData();
-        // formData.append('file', file);
-        //
-        // const uploadResponse = await axios.post('https://localhost:44317/api/content/uploadFile', formData);
-        // const uploadResult = uploadResponse.data;
 
-        const eventResponse = await axios.post('https://localhost:44317/api/Events/CreateEvent', {
-            title,
-            description,
-            location,
-            date,
-            price,
-            status,
-            catId,
-            imageId,
-            orgUserId
-        });
-        console.log(eventResponse);
+        try {
+            const eventResponse = await axios.post('https://localhost:44317/api/Events/CreateEvent', {
+                title,
+                description,
+                location,
+                date,
+                price,
+                status,
+                catId,
+                imageId,
+                orgUserId
+            });
+            console.log(eventResponse);
 
-        const eventResult = eventResponse.data;
-        console.log(eventResult);
+            const eventResult = eventResponse.data;
+            console.log(eventResult);
+
+            if(eventResponse.status){
+                navigate('../myProfile');
+            }
+
+        }catch (e) {
+            if (error.response) {
+                setError(error.response.data.message);
+                console.error('error:', error.response.data.message);
+            } else if(error.request) {
+                console.error('error:', error.request);
+            } else {
+                console.error('error', error.message);
+            }
+        }
     };
 
     return (
-        <div>
-            <input type="file" onChange={handleImageChange} required/>
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="title" value={title} onChange={handleInputChange} placeholder="Title"
-                       required/>
-                <input type="text" name="description" value={description} onChange={handleInputChange}
-                       placeholder="Description" required/>
-                <input type="text" name="location" value={location} onChange={handleInputChange} placeholder="Location"
-                       required/>
-                <input type="date" name="date" value={date} onChange={handleInputChange} required/>
-                <input type="text" name="price" value={price} onChange={handleInputChange} placeholder="Price"
-                       required/>
-                <input type="text" name="status" value={status} onChange={handleInputChange} placeholder="Status"
-                       required/>
-                <input type="number" name="catId" value={catId} onChange={handleInputChange} placeholder="Category ID"
-                       required/>
-                <button type="submit">Create Event</button>
-            </form>
-        </div>
+        <main className="CreateEventMain">
+            <Container className="mt-4">
+                <h1 className="headingCreateEvent"> Add your<br/>own event</h1>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3" controlId="formTitle">
+                        <Form.Label>Title</Form.Label>
+                        <Form.Control type="text" placeholder="Enter event title" name="title" value={title} onChange={handleInputChange} required />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formDescription">
+                        <Form.Label>Description</Form.Label>
+                        <Form.Control type="text" placeholder="Enter event description" name="description" value={description} onChange={handleInputChange} required />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formLocation">
+                        <Form.Label>Location</Form.Label>
+                        <Form.Control type="text" placeholder="Enter event location" name="location" value={location} onChange={handleInputChange} required />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formDate">
+                        <Form.Label>Date</Form.Label>
+                        <Form.Control type="date" name="date" value={date} onChange={handleInputChange} required />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formPrice">
+                        <Form.Label>Price</Form.Label>
+                        <Form.Control type="text" placeholder="Enter price" name="price" value={price} onChange={handleInputChange} required />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formStatus">
+                        <Form.Label>Status</Form.Label>
+                        <Form.Control type="text" placeholder="Enter event status" name="status" value={status} onChange={handleInputChange} required />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formCatId">
+                        <Form.Label>Category ID</Form.Label>
+                        <Form.Control type="number" placeholder="Enter category ID" name="catId" value={catId} onChange={handleInputChange} required />
+                    </Form.Group>
+
+                    <Form.Group controlId="formFile" className="mb-3">
+                        <Form.Label>Event Image</Form.Label>
+                        <Form.Control type="file" onChange={handleImageChange} required />
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit">
+                        Create Event
+                    </Button>
+                </Form>
+            </Container>
+        </main>
     );
 }
 

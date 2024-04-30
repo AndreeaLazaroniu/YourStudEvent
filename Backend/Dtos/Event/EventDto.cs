@@ -11,6 +11,8 @@ public class EventDto
     public DateTime Date { get; set; }
     public string Price { get; set; }
     public string Status { get; set; }
+    public int CatId { get; set; }
+    public int ImageId { get; set; }
     
     public IEnumerable<UserDto> Students { get; set; }
 }
