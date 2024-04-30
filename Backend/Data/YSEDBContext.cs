@@ -15,6 +15,7 @@ public class YSEDBContext : IdentityDbContext<AppUser>
     
     public DbSet<Category> Categories { get; set; } = null!;
     public DbSet<Event> Events { get; set; } = null!;
+    public DbSet<UploadedFile> UploadedFiles { get; set; } = null!;
     
     protected override void OnModelCreating(ModelBuilder builder)
     {

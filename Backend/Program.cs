@@ -107,6 +107,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IEventService, EventService>();
+builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<IRepository<Category>, CategoryRepository>();
 builder.Services.AddTransient<IRepository<Event>, EventRepository>();
 

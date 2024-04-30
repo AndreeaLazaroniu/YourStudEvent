@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using BEYourStudEvents.Data;
 using BEYourStudEvents.Dtos.Account;
 using BEYourStudEvents.Dtos.Event;
 using BEYourStudEvents.Entities;
@@ -16,11 +17,13 @@ public class EventsControllers : ControllerBase
 {
     private readonly IEventService _eventService;
     private readonly UserManager<AppUser> _userManager;
+    private readonly IFileService _fileService;
     
-    public EventsControllers(IEventService eventService, UserManager<AppUser> userManager)
+    public EventsControllers(IEventService eventService, UserManager<AppUser> userManager, IFileService fileService)
     {
         _eventService = eventService;
         _userManager = userManager;
+        _fileService = fileService;
     }
     
     [HttpGet("GetEvents")]
@@ -57,6 +60,13 @@ public class EventsControllers : ControllerBase
         {
             return Unauthorized("User not found.");
         }
+        
+        var image = await _fileService.GetLastUploadedFileAsync();
+        if (image == null)
+        {
+            return BadRequest("No image has been uploaded.");
+        }
+        eventDto.ImageId = image.Id;
         
         // Set the Organizer UserId
         eventDto.OrgUserId = user.Id;
@@ -101,4 +111,5 @@ public class EventsControllers : ControllerBase
 
         return Ok(students);
     }
+    
 }

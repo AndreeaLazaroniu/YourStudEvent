@@ -122,7 +122,8 @@ public class AccountController : ControllerBase
                 UserName = orgRegisterDto.UserName,
                 OrgName = orgRegisterDto.OrgName,
                 OrgDescription = orgRegisterDto.OrgDescription,
-                Address = orgRegisterDto.Address
+                Address = orgRegisterDto.Address,
+                PhoneNumber = orgRegisterDto.PhoneNumber
             };
 
             var createdUser = await _userManager.CreateAsync(studUser, orgRegisterDto.Password);

@@ -27,7 +27,8 @@ public class EventService : IEventService
             Date = e.Date,
             Location = e.Location,
             Price = e.Price,
-            Status = e.Status
+            Status = e.Status,
+            // ImageFile= e.ImageFile
         });
 
         return eventDtos;
@@ -63,6 +64,7 @@ public class EventService : IEventService
             Price = eventDto.Price,
             Status = eventDto.Status,
             CatId = eventDto.CatId,
+            ImageId = eventDto.ImageId,
             OrgUserId = eventDto.OrgUserId
         };
         return await _eventRepository.PostAsync(newEvent);

@@ -28,5 +28,20 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .WithMany(c=> c.Events)
             .HasForeignKey(c=>c.CatId)
             .HasConstraintName("Fk_Events_Category");
+        
+        builder.HasOne(c => c.Image)
+            .WithOne()
+            .HasForeignKey<Event>(c=>c.ImageId)
+            .HasConstraintName("Fk_Events_Image");
     }
 }
+
+
+
+
+
+
+
+
+
+

@@ -162,6 +162,9 @@ namespace BEYourStudEvents.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -187,9 +190,41 @@ namespace BEYourStudEvents.Migrations
 
                     b.HasIndex("CatId");
 
+                    b.HasIndex("ImageId")
+                        .IsUnique();
+
                     b.HasIndex("OrgUserId");
 
                     b.ToTable("Events", (string)null);
+                });
+
+            modelBuilder.Entity("BEYourStudEvents.Entities.UploadedFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OriginalName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UploadedFiles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -221,13 +256,13 @@ namespace BEYourStudEvents.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "31e5e387-94f9-4331-8b32-8e27e17ee9bf",
+                            Id = "599c90d6-78c1-4379-8022-2366081e28e5",
                             Name = "Organizer",
                             NormalizedName = "ORGANIZER"
                         },
                         new
                         {
-                            Id = "de5169c5-191b-4584-827b-c5763a1a54cc",
+                            Id = "6ac4c102-78d4-4fd7-9c67-7458d2034a64",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -355,6 +390,13 @@ namespace BEYourStudEvents.Migrations
                         .IsRequired()
                         .HasConstraintName("Fk_Events_Category");
 
+                    b.HasOne("BEYourStudEvents.Entities.UploadedFile", "Image")
+                        .WithOne()
+                        .HasForeignKey("BEYourStudEvents.Entities.Event", "ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("Fk_Events_Image");
+
                     b.HasOne("BEYourStudEvents.Entities.AppUser", "OrgUser")
                         .WithMany("Events")
                         .HasForeignKey("OrgUserId")
@@ -363,6 +405,8 @@ namespace BEYourStudEvents.Migrations
                         .HasConstraintName("FK_Events_OrgUser");
 
                     b.Navigation("Category");
+
+                    b.Navigation("Image");
 
                     b.Navigation("OrgUser");
                 });
