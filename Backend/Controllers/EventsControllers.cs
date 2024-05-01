@@ -68,6 +68,7 @@ public class EventsControllers : ControllerBase
             return BadRequest("No image has been uploaded.");
         }
         eventDto.ImageId = image.Id;
+        // eventDto.Image = image;
         
         // Set the Organizer UserId
         eventDto.OrgUserId = user.Id;

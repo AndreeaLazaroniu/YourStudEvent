@@ -1,8 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Header.css';
 import logo from "../../Assets/logo.png";
+import { useNavigate} from "react-router-dom";
+import {AuthContext} from "../../AuthContext";
+
 
 export const Header = () => {
+    const { isLoggedIn, setIsLoggedIn } = React.useContext(AuthContext); // Add this line
+    const navigate = useNavigate();
+
+    // Add a function to handle logout
+    const handleLogout = () => {
+        // Clear the token from local storage
+        localStorage.removeItem('token');
+        // Set the isLoggedIn state to false
+        setIsLoggedIn(false);
+    };
+
     return (
         <div className="Header">
             <ul className="nav">
@@ -13,8 +27,17 @@ export const Header = () => {
                     <li><a href="/events">Events</a></li>
                 </div>
                 <div className="right">
-                    <li><a href="/login">Login</a></li>
-                    <li className="right"><a href="/role">Register</a></li>
+                    {isLoggedIn ? (
+                        <>
+                            <button className="headerButton" onClick={() => navigate('../myProfile')}>MyProfile</button>
+                            <button className="headerButton" onClick={handleLogout}>Logout</button>
+                        </>
+                    ) : (
+                        <>
+                            <button className="headerButton" onClick={() => navigate('../login')}>Login</button>
+                            <button className="headerButton" onClick={() => navigate('../register')}>Register</button>
+                        </>
+                    )}
                 </div>
             </ul>
         </div>

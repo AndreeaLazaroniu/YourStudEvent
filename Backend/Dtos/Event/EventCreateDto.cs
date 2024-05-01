@@ -1,3 +1,5 @@
+using BEYourStudEvents.Entities;
+
 namespace BEYourStudEvents.Dtos.Event;
 
 public class EventCreateDto
@@ -10,5 +12,6 @@ public class EventCreateDto
     public string Status { get; set; }
     public int CatId { get; set; }
     public int ImageId { get; set; }
+    // public UploadedFile Image { get; set; }
     public string OrgUserId { get; set; }
 }

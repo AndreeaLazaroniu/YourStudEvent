@@ -23,7 +23,7 @@ export const AboutPage = () => {
         <Container>
             <Row className="mt-4 mb-4">
                 <Col>
-                    <h1 className="stylish-title">YourStudEvent</h1>
+                    <h1 className="stylish-title">YourStudEvent_</h1>
                     <p>Welcome to YourStudEvent, the ultimate platform for student events and engagement. Whether you're a student looking to join exciting events or an organizer aiming to reach a dedicated audience, our platform provides all the tools you need to succeed. Explore a variety of educational, cultural, and fun events designed to enhance your academic life and personal growth.</p>
                 </Col>
             </Row>

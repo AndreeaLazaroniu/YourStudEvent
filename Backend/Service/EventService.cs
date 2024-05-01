@@ -67,6 +67,7 @@ public class EventService : IEventService
             CatId = eventDto.CatId,
             ImageId = eventDto.ImageId,
             OrgUserId = eventDto.OrgUserId
+            // Image = eventDto.Image
         };
         return await _eventRepository.PostAsync(newEvent);
     }

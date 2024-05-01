@@ -31,13 +31,29 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
 }
 
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    50% { border-color: transparent; }
+}
+
 /* Stylish title with gradient */
 .stylish-title {
     font-size: 2rem;
     background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 20px; /* Space below the title */
+    overflow: hidden; /* Ensures the content is only shown within the title area */
+    border-right: .15em solid #072543; /* The typewriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    /*margin: 0 auto; !* Gives that scrolling effect as the typing happens *!*/
+    letter-spacing: .15em; /* Adjust as needed */
+    animation:
+            typing 3.5s steps(40),
+            blink-caret .75s step-end infinite;
 }
 
 /* Carousel styling */

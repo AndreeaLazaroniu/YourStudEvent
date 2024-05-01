@@ -5,6 +5,7 @@ import logo from '../../Assets/logo.png';
 import { MdEmail } from "react-icons/md";
 import { AiOutlineLock } from "react-icons/ai";
 import { useNavigate} from "react-router-dom";
+import {AuthContext} from "../../AuthContext";
 import collage_events from "../../Assets/collage-events.png";
 
 export const Login = () => {
@@ -13,6 +14,8 @@ export const Login = () => {
     const [Password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { setIsLoggedIn } = React.useContext(AuthContext) // Add this line
+
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -45,6 +48,7 @@ export const Login = () => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${result.token}`;
 
             if(response.status){
+                setIsLoggedIn(true);
                 navigate('../myProfile');
             }
         }catch (e) {
@@ -118,7 +122,7 @@ export const Login = () => {
                     </div>
                     <button type="submit" className="button">Login</button>
                     <div className="register-link">
-                        <p>Don't have an account? <a href="#">Register</a></p>
+                        <p>Don't have an account? <a href="./role">Register</a></p>
                     </div>
                 </form>
             </div>

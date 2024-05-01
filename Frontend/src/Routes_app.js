@@ -9,6 +9,7 @@ import {Home} from "./Components/Home/home";
 import {CreateEvent} from "./Components/Event/CreateEvent";
 import {AboutPage} from "./Components/About/AboutPage";
 import {EventsPage} from "./Components/Events/EventsPage";
+import {ResetPassword} from "./Components/Password/ResetPassword"
 
 export const Routes_app = () => {
     return (
@@ -24,6 +25,7 @@ export const Routes_app = () => {
                     <Route path="/createEvent" element={<CreateEvent />} />
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/events" element={<EventsPage />} />
+                    <Route path="/forgotpassword" element={<ResetPassword />} />
                 </Routes>
             </Layout>
         </Router>

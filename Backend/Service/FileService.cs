@@ -92,5 +92,9 @@ public class FileService : IFileService
     {
         return await _dbContext.UploadedFiles.OrderByDescending(f => f.Id).FirstOrDefaultAsync();
     }
-
+    
+    public async Task<UploadedFile> FindImageAsync(int id)
+    {
+        return await _dbContext.UploadedFiles.FindAsync(id);
+    }
 }
