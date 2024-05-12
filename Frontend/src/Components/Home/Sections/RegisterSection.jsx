@@ -1,24 +1,21 @@
-import { Container, Button, Form } from 'react-bootstrap';
 import React from 'react';
 import './RegisterSection.css';
+import {useNavigate} from "react-router-dom";
 
 export const RegisterSection = () => {
+    const navigate = useNavigate();
+
+    const navigateToEvents = () => {
+        navigate('../role');
+    };
+
     return (
-        <Container id="register" className="my-5">
-            <h2>Join Us</h2>
-            <p>Register now to get the latest updates and join our upcoming events!</p>
-            <Form>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text>
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                    Subscribe
-                </Button>
-            </Form>
-        </Container>
+        <div className="registerHome-container">
+            <h2 className="joiUsTitle">Do you want to discover more?<br/>Join Us</h2>
+            <p className="joinsUsText">Register now to get the latest updates and join our upcoming events!</p>
+            <button className="joinUsButton" onClick={navigateToEvents}>
+                Register
+            </button>
+        </div>
     );
 }

@@ -8,10 +8,12 @@
 
 .mainReg {
     font-family: 'Noto Sans JP', sans-serif;
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
-    /*min-height: 100vh;*/
+    padding-top: 90px; /* Equal to header height */
+    padding-bottom: 90px; /* Equal to footer height */
+    flex-grow: 1; /* Makes sure the content takes the available space */
+    display: flex; /* Makes the .main a flex container */
+    justify-content: center; /* Centers content vertically */
+    align-items: center; /* Centers content horizontally */
     background-color: #f4fafb;
 }
 
@@ -29,8 +31,6 @@ code {
     padding: 20px 50px;
     width: 100%;
     max-width: 400px;
-    /*margin: 20px auto;*/
-    /*padding: 20px;*/
     text-align: center;
 }
 

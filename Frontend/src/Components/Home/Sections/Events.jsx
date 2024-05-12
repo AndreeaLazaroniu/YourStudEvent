@@ -31,22 +31,24 @@ export const Events = () => {
     }, []);
 
     return (
-        <Container id="events" className="my-5">
-            <h2>Upcoming Events</h2>
-            <Row xs={1} md={3} className="g-4">
-                {events.map((event, Id) => (
-                    <Col key={Id}>
-                        <Card>
-                            <Card.Img variant="top" src={imagePaths[Id]} />
-                            <Card.Body>
-                                <Card.Title>{event.title}</Card.Title>
-                                <Card.Text>{event.description}</Card.Text>
-                                <Card.Text>{event.price}</Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
-        </Container>
+        <body className="mainEventsHome">
+            <div className="eventsHome-container">
+                <h2 className="homeEventsTitle">Upcoming Events</h2>
+                <Row xs={1} md={3} className="g-4">
+                    {events.map((event, Id) => (
+                        <Col key={Id}>
+                            <Card className="homeEventsCard">
+                                <Card.Img variant="top" src={imagePaths[Id]} />
+                                <Card.Body>
+                                    <Card.Title>{event.title}</Card.Title>
+                                    <Card.Text>{event.description}</Card.Text>
+                                    <Card.Text>{event.price}</Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
+            </div>
+        </body>
     );
 }

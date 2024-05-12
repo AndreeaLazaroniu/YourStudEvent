@@ -1,15 +1,32 @@
-.my-5{
-    margin-top: 5rem !important;
-    margin-bottom: 5rem !important;
+.MainEventsPage {
+    font-family: 'Noto Sans JP', sans-serif;
+    padding-top: 40px; /* Equal to header height */
+    padding-bottom: 60px; /* Equal to footer height */
+    flex-grow: 1; /* Makes sure the content takes the available space */
+    display: flex; /* Makes the .main a flex container */
+    justify-content: center; /* Centers content vertically */
+    align-items: center; /* Centers content horizontally */
 }
 
-.events-container {
-    padding: 40px 0;
-    background-color: #ffffff; /* White background for clarity */
+.eventsPageContainer{
+    margin-top: 100px;
+    width: 100%;
+    max-width: 1500px;
+    padding: 0 15px;
 }
 
-.card {
-    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.1); /* Adds subtle shadows to cards */
+/*.my-5{*/
+/*    margin-top: 5rem !important;*/
+/*    margin-bottom: 5rem !important;*/
+/*}*/
+
+/*.events-container {*/
+/*    padding: 40px 0;*/
+/*    background-color: #ffffff; !* White background for clarity *!*/
+/*}*/
+
+.eventPageCard {
+    box-shadow: 0 4px 8px rgb(142, 181, 184); /* Adds subtle shadows to cards */
 }
 
 .card-img-top {
@@ -21,7 +38,7 @@
     padding: 15px;
 }
 
-.card:hover {
+.eventPageCard:hover {
     transform: scale(1.05); /* Increase the size of the card */
     transition: transform .2s; /* Smooth transition */
 }

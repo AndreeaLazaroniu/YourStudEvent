@@ -14,7 +14,7 @@ export const Login = () => {
     const [Password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const { setIsLoggedIn } = React.useContext(AuthContext) // Add this line
+    const { setIsLoggedIn } = React.useContext(AuthContext)
 
 
     const handleInputChange = (event) => {
@@ -49,7 +49,11 @@ export const Login = () => {
 
             if(response.status){
                 setIsLoggedIn(true);
-                navigate('../myProfile');
+                if(UserName === 'Participant2') {
+                    navigate('../myProfileStud');
+                }else{
+                    navigate('../myProfile');
+                }
             }
         }catch (e) {
             if (error.response) {
@@ -63,35 +67,8 @@ export const Login = () => {
         }
     };
 
-    // const handleLogin = async (e) => {
-    //     e.preventDefault();
-    //     setError('');
-    //
-    //     try{
-    //         const response = await axios.post('https://localhost:44317/api/account/login', {
-    //             UserName,
-    //             Password
-    //         });
-    //
-    //         if(response.status){
-    //             setIsAuthenticated(true);
-    //             navigate('../MyProfile');
-    //         }
-    //     }catch (error)
-    //     {
-    //         if (error.response) {
-    //             setError(error.response.data.message);
-    //             console.error('error:', error.response.data.message);
-    //         } else if(error.request) {
-    //             console.error('error:', error.request);
-    //         } else {
-    //             console.error('error', error.message);
-    //         }
-    //     }
-    // }
-
     return (
-        <body className="main" style={
+        <body className="mainLogin" style={
             {backgroundImage: `url(${collage_events})`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",

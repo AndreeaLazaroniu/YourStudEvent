@@ -3,6 +3,8 @@ import axios from 'axios';
 import './studentRegister.css';
 import { useNavigate } from 'react-router-dom';
 import regStud from '../../Assets/partReg1.jpg';
+import { Container, Row, Col } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const StudentRegister = () => {
     const [formData, setFormData] = useState({
@@ -64,27 +66,33 @@ export const StudentRegister = () => {
                 backgroundPosition: "left",
                 height: "100vh",
                 width: "100vw",
-                position: "fixed",
+                display: "flex",
                 top: "0"
             }
         }>
-            {/*<div className="studentRegister">*/}
-                <h2 className="studentRegister-heading">Student<br/>Registration</h2>
-                {error && <p>{error}</p>}
-                <form className="studentRegister-form" onSubmit={handleSubmit}>
-                    <input type="email" name="Email" value={formData.Email} onChange={handleInputChange} placeholder="Email*" required/>
-                    <input type="password" name="Password" value={formData.Password} onChange={handleInputChange} placeholder="Password*" required/>
-                    <input type="password" name="VerifyPassword" value={formData.VerifyPassword} onChange={handleInputChange} placeholder="Verify Password*" required/>
-                    <input type="text" name="FirstName" value={formData.FirstName} onChange={handleInputChange} placeholder="First Name*" required/>
-                    <input type="text" name="LastName" value={formData.LastName} onChange={handleInputChange} placeholder="Last Name*" required/>
-                    <input type="text" name="UserName" value={formData.UserName} onChange={handleInputChange} placeholder="Username*" required/>
-                    <input type="tel" name="PhoneNumber" value={formData.PhoneNumber} onChange={handleInputChange} placeholder="Phone Number*" required/>
-                    <input type="date" name="DateOfBirth" value={formData.DateOfBirth} onChange={handleInputChange} placeholder="Date of Birth*" required/>
-                    <input type="text" name="University" value={formData.University} onChange={handleInputChange} placeholder="University*" required/>
-                    <textarea name="Address" value={formData.Address} onChange={handleInputChange} placeholder="Address*" required/>
-                    <button type="submit">Register</button>
-                </form>
-            {/*</div>*/}
+            <div className="studentRegister">
+                <Row>
+                    <Col className="regHeading-col">
+                        <h2 className="studentRegister-heading">Student<br/>Registration</h2>
+                        {error && <p>{error}</p>}
+                    </Col>
+                    <Col>
+                        <form className="studentRegister-form" onSubmit={handleSubmit}>
+                            <input type="email" name="Email" value={formData.Email} onChange={handleInputChange} placeholder="Email*" required/>
+                            <input type="password" name="Password" value={formData.Password} onChange={handleInputChange} placeholder="Password*" required/>
+                            <input type="password" name="VerifyPassword" value={formData.VerifyPassword} onChange={handleInputChange} placeholder="Verify Password*" required/>
+                            <input type="text" name="FirstName" value={formData.FirstName} onChange={handleInputChange} placeholder="First Name*" required/>
+                            <input type="text" name="LastName" value={formData.LastName} onChange={handleInputChange} placeholder="Last Name*" required/>
+                            <input type="text" name="UserName" value={formData.UserName} onChange={handleInputChange} placeholder="Username*" required/>
+                            <input type="tel" name="PhoneNumber" value={formData.PhoneNumber} onChange={handleInputChange} placeholder="Phone Number*" required/>
+                            <input type="date" name="DateOfBirth" value={formData.DateOfBirth} onChange={handleInputChange} placeholder="Date of Birth*" required/>
+                            <input type="text" name="University" value={formData.University} onChange={handleInputChange} placeholder="University*" required/>
+                            <textarea name="Address" value={formData.Address} onChange={handleInputChange} placeholder="Address*" required/>
+                            <button type="submit">Register</button>
+                        </form>
+                    </Col>
+                </Row>
+            </div>
         </body>
     );
 };

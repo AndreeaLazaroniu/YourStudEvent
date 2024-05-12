@@ -109,6 +109,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IEventService, EventService>();
 builder.Services.AddTransient<IFileService, FileService>();
+builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IRepository<Category>, CategoryRepository>();
 builder.Services.AddTransient<IRepository<Event>, EventRepository>();
 

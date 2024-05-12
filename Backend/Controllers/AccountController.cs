@@ -1,6 +1,8 @@
+using System.Security.Claims;
 using BEYourStudEvents.Dtos.Account;
 using BEYourStudEvents.Entities;
 using BEYourStudEvents.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,13 +16,14 @@ public class AccountController : ControllerBase
     private readonly UserManager<AppUser> _userManager;
     private readonly ITokenService _tokenService;
     private readonly SignInManager<AppUser> _signInManager;
-    public static NewUserDto User;
+    private readonly IUserService _userService;
 
-    public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager)
+    public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager, IUserService userService)
     {
         _userManager = userManager;
         _tokenService = tokenService;
         _signInManager = signInManager;
+        _userService = userService;
     }
     
     [HttpPost("login")]
@@ -157,4 +160,70 @@ public class AccountController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+
+    [Authorize]
+    [HttpGet("GetUsers")]
+    public async Task<IEnumerable<UserDto>> GetUsers()
+    {
+        var users = await _userService.GetUsersAsync();
+        return users;
+    }
+    
+    [Authorize]
+    [HttpDelete("deleteAccount")]
+    public async Task<IActionResult> DeleteUser()
+    {
+        var email = User.FindFirstValue(ClaimTypes.Email);
+        if (string.IsNullOrEmpty(email))
+        {
+            return null;
+        }
+        
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        
+        await _userService.DeleteByIdAsync(user.Id);
+        
+        return Ok();
+    }
+    
+    [Authorize]
+    [HttpGet("GetOneUser")]
+    public async Task<UserDto?> GetUser()
+    {
+        var email = User.FindFirstValue(ClaimTypes.Email);
+        if (string.IsNullOrEmpty(email))
+        {
+            return null;
+        }
+        
+        var user = await _userService.GetByEmailAsync(email);
+        
+        return user;
+    }
+    
+    [Authorize]
+    [HttpPut("updateAccount")]
+    public async Task<AppUser> UpdateUser([FromBody] UserDto user)
+    {
+        var email = User.FindFirstValue(ClaimTypes.Email);
+        if (string.IsNullOrEmpty(email))
+        {
+            return null;
+        }
+        
+        var userFound = await _userManager.FindByEmailAsync(email);
+        if (userFound == null)
+        {
+            return null;
+        }
+        
+        var updatedUser = await _userService.UpdateAsync(userFound, user);
+        
+        return updatedUser;
+    }
+    
 }

@@ -35,6 +35,18 @@ public class EventsControllers : ControllerBase
         //return Ok(events);
     }
     
+    [HttpGet("GetEvent/{eventId}", Name = "GetEvent")]
+    public async Task<EventDto> GetEvent(int eventId)
+    {
+        var eventEntity = await _eventService.GetEventAsync(eventId);
+        if (eventEntity == null)
+        {
+            return null;
+        }
+
+        return eventEntity;
+    }
+    
     [HttpGet("GetStudents/{eventId}", Name = "GetStudents")]
     public async Task<ActionResult<UserDto>> GetStudents(int eventId)
     {

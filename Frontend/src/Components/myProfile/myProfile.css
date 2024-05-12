@@ -1,64 +1,59 @@
-/* General page styles */
-.my-profile {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-.my-profile h1 {
-    color: #333;
-    text-align: center;
-}
-
-/* Profile image and upload button styles */
-.profile-image-container {
+/* Container styling for center alignment and padding */
+.profile-container {
     display: flex;
-    align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    padding: 20px;
+}
+
+.rowElementProfile{
+    margin-top: 50px;
+    display: flex;
+    justify-content: left;
+    padding: 20px;
+}
+
+/* Form styling for better visual separation */
+.formGroupProfile {
     margin-bottom: 20px;
+    width: 500px;
+
 }
 
-.profile-image-container img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%; /* Makes the image round */
-    border: 2px solid #007BFF; /* Blue border for the image */
-}
-
-/* Input and textarea styling */
-.my-profile input[type="text"],
-.my-profile input[type="email"],
-.my-profile input[type="tel"],
-.my-profile textarea {
-    width: 100%;
-    padding: 8px;
-    margin: 6px 0;
-    display: inline-block;
+/* Input field styling */
+.form-control {
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* Makes padding not affect the width */
+    border-radius: 20px;
+    width: 400px;
+    height: fit-content;
 }
 
-.my-profile textarea {
-    height: 100px;
-    resize: vertical; /* Allows vertical resizing, none to disable */
+.text-inputProfile {
+    color: black;
 }
 
 /* Button styling */
-.my-profile button {
-    width: 100%;
-    background-color: #007BFF;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
+.button-profile {
+    padding: 10px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-.my-profile button:hover {
-    background-color: #0056b3;
+/* Specific button colors */
+.button-profile.primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.button-profile.success {
+    background-color: #28a745;
+    color: white;
+}
+
+.button-profile.danger {
+    background-color: #dc3545;
+    color: white;
 }

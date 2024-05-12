@@ -6,28 +6,23 @@
     box-sizing: border-box;
 }
 
-body {
+.body {
     font-family: 'Noto Sans JP', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 40px); /* This should be 100vh minus the footer's height if the footer is outside the body tag */
     background-color: #edf2f4;
-    padding-bottom: 60px; /* Adjust this value to be equal to or greater than the footer's height */
 }
 
 code {
     font-family: 'Sedan', sans-serif;
 }
 
-/*.mainRole {*/
-/*    padding-top: 70px;*/
-/*    padding-bottom: 40px;*/
-/*    flex-grow: 1;*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*}*/
+.mainRole {
+    padding-top: 70px; /* Equal to header height */
+    padding-bottom: 40px; /* Equal to footer height */
+    flex-grow: 1; /* Makes sure the content takes the available space */
+    display: flex; /* Makes the .main a flex container */
+    justify-content: center; /* Centers content vertically */
+    align-items: center; /* Centers content horizontally */
+}
 
 /* Ensure the .role container is not too tall for smaller viewports */
 .role {

@@ -18,7 +18,7 @@ export const Role = () => {
     };
 
     return (
-        <body className="main" style={
+        <body className="mainRole" style={
             {backgroundImage: `url(${collage_events})`,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",

@@ -7,6 +7,7 @@ namespace BEYourStudEvents.Interfaces;
 public interface IEventService
 {
     Task<IEnumerable<EventDto>> GetEventsAsync();
+    Task<EventDto> GetEventAsync(int eventId);
     Task<IEnumerable<UserDto>> GetStudentsAsync(int eventId);
     Task<Event> CreateEventAsync(EventCreateDto eventDto);
     Task DeleteEventAsync(int id);

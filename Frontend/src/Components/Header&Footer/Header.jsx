@@ -35,7 +35,7 @@ export const Header = () => {
                     ) : (
                         <>
                             <button className="headerButton" onClick={() => navigate('../login')}>Login</button>
-                            <button className="headerButton" onClick={() => navigate('../register')}>Register</button>
+                            <button className="headerButton" onClick={() => navigate('../role')}>Register</button>
                         </>
                     )}
                 </div>

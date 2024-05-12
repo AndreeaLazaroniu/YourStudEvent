@@ -3,6 +3,7 @@ import axios from "axios";
 import { Form, Button, Container } from 'react-bootstrap';
 import './CreateEvent.css';
 import { useNavigate} from "react-router-dom";
+import bkg from "../../Assets/bgdGif.gif";
 
 export const CreateEvent = () => {
     // State to hold form data
@@ -116,7 +117,17 @@ export const CreateEvent = () => {
     };
 
     return (
-        <main className="CreateEventMain">
+        <main className="CreateEventMain" style={
+            {backgroundImage: `url(${bkg})`,
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                height: "100vh",
+                width: "100vw",
+                position: "fixed",
+                top: "0"
+            }
+        }>
             <Container className="mt-4">
                 <h1 className="headingCreateEvent"> Add your<br/>own event</h1>
                 <Form onSubmit={handleSubmit}>

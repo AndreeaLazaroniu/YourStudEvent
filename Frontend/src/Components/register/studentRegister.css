@@ -10,19 +10,31 @@ code {
     font-family: 'Sedan', sans-serif;
 }
 
+.mainReg {
+    font-family: 'Noto Sans JP', sans-serif;
+    padding-top: 90px; /* Equal to header height */
+    padding-bottom: 90px; /* Equal to footer height */
+    flex-grow: 1; /* Makes sure the content takes the available space */
+    display: flex; /* Makes the .main a flex container */
+    justify-content: normal; /* Centers content vertically */
+    padding-left: 600px; /*!* Equal to footer height *!*/
+    align-items: center; /* Centers content horizontally */
+    background-color: #f4fafb;
+}
+
 .studentRegister {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 20px 50px;
-    width: 100%;
-    max-width: 400px;
-    /*margin: 20px auto;*/
-    /*padding: 20px;*/
     text-align: center;
+    padding-left: 100px;
+}
+
+.regHeading-col {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .studentRegister-heading {

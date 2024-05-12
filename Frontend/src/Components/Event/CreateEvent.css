@@ -1,9 +1,17 @@
 /* Container styling */
+.CreateEventMain {
+    padding-top: 70px; /* Equal to header height */
+    padding-bottom: 40px; /* Equal to footer height */
+    flex-grow: 1; /* Makes sure the content takes the available space */
+    display: flex; /* Makes the .main a flex container */
+    justify-content: center; /* Centers content vertically */
+    align-items: center; /* Centers content horizontally */
+}
+
 .CreateEventMain .headingCreateEvent{
     text-align: center;
     font-size: 2rem;
-    margin-bottom: 1.5rem;
-
+    margin-bottom: 0.5rem;
 }
 
 .CreateEventMain .container {
@@ -17,14 +25,14 @@
 
 /* Form group styling */
 .CreateEventMain .form-group {
-    margin-bottom: 1rem; /* Space between form groups */
+    margin-bottom: 0.5rem; /* Space between form groups */
 }
 
 /* Labels */
 .CreateEventMain .form-label {
     font-size: 0.9rem; /* Font size for labels */
     color: #333; /* Dark grey color for text */
-    margin-bottom: 0.5rem; /* Space below the label */
+    margin-bottom: 0.25rem; /* Space below the label */
     display: block; /* Ensure the label is block level */
 }
 

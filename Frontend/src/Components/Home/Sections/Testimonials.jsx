@@ -4,9 +4,9 @@ import './Testimonials.css';
 
 export const Testimonials = () => {
     return (
-        <Container id="testimonials" className="my-5">
-            <h2>Testimonials</h2>
-            <Accordion>
+        <div className="testimonials-container">
+            <h2 className="testimonialsTitle">Testimonials</h2>
+            <Accordion className="testimonialsBox">
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>Fantastic Event Organization!</Accordion.Header>
                     <Accordion.Body>
@@ -20,6 +20,6 @@ export const Testimonials = () => {
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
-        </Container>
+        </div>
     );
 }

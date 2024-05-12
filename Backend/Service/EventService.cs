@@ -34,7 +34,29 @@ public class EventService : IEventService
 
         return eventDtos;
     }
-    
+
+    public async Task<EventDto> GetEventAsync(int eventId)
+    {
+        var eventEntity = await _eventRepository.FindByIdAsync(eventId);
+        if (eventEntity == null)
+        {
+            return null;
+        }
+        
+        return new EventDto
+        {
+            EventId = eventEntity.Id,
+            Title = eventEntity.Title,
+            Description = eventEntity.Description,
+            Date = eventEntity.Date,
+            Location = eventEntity.Location,
+            Price = eventEntity.Price,
+            Status = eventEntity.Status,
+            ImageId = eventEntity.ImageId,
+            CatId = eventEntity.CatId
+        };
+    }
+
     public async Task<IEnumerable<UserDto>> GetStudentsAsync(int eventId)
     {
         var eventWithUsers = await _eventRepository.FindByIdAsync(eventId);

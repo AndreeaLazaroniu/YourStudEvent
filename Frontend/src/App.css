@@ -1,11 +1,11 @@
-.App {
-  padding-top: 60px; /* Adjust to the height of your header */
-  padding-bottom: 60px; /* Adjust to the height of your footer */
-  min-height: calc(100vh - 120px); /* Adjust the 120px to account for both header and footer */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+/*.App {*/
+/*  padding-top: 60px; !* Adjust to the height of your header *!*/
+/*  padding-bottom: 60px; !* Adjust to the height of your footer *!*/
+/*  min-height: calc(100vh - 120px); !* Adjust the 120px to account for both header and footer *!*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  justify-content: center;*/
+/*}*/
 
 .App-logo {
   height: 40vmin;
