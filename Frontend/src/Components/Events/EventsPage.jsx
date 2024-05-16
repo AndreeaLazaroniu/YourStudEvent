@@ -3,50 +3,69 @@ import React, { useState, useEffect } from 'react';
 import './EventsPage.css';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {useAuth} from "../../AuthContext";
 
 export const EventsPage = () => {
     const [events, setEvents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [imagePaths, setImagePaths] = React.useState([]);
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [isAssigned, setIsAssigned] = useState(false);
+    const [sortOrder, setSortOrder] = useState('');
     const navigate = useNavigate();
+    const auth = useAuth();
 
     useEffect(() => {
-        fetch('https://localhost:44317/api/Events/GetEvents')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setEvents(data);
-                return data;
-            })
-            .then(events => {
-                const fetchImagePaths = events.map(event =>
-                    axios.get(`https://localhost:44317/api/content/getFile/${event.imageId}`)
-                        .then(response => response.data)
-                );
-                return Promise.all(fetchImagePaths);
-            })
-            .then(setImagePaths)
-            .catch(error => console.error('Error fetching events:', error));
+        const fetchEventsAndImages = async () => {
+            try {
+                // Fetch events
+                const eventResponse = await axios.get('https://localhost:44317/api/Events/GetEvents', {
+                    headers: {
+                        Authorization: `Bearer ${auth.user}`
+                    }
+                });
+                const eventsData = eventResponse.data;
 
-        fetch('https://localhost:44317/api/Categories/GetCategories')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(setCategories)
+                // Fetch images for each event and combine them with event data
+                const imagePaths = await Promise.all(eventsData.map(async (event) => {
+                    try {
+                        const imageResponse = await axios.get(`https://localhost:44317/api/content/getObjFile/${event.imageId}`, {
+                            headers: {
+                                Authorization: `Bearer ${auth.user}`
+                            }
+                        });
+                        return {
+                            ...event,
+                            imageUrl: `https://localhost:44317${imageResponse.data.path}` // Ensure you have the correct property for the path
+                        };
+                    } catch (error) {
+                        console.error(`Failed to fetch image for event ${event.id}:`, error);
+                        return { ...event, imageUrl: 'path_to_default_image.jpg' }; // Fallback image
+                    }
+                }));
+
+                console.log("Image paths and events combined: ", imagePaths);
+                // Update events state with images
+                setEvents(imagePaths);
+
+            } catch (error) {
+                console.error('Error fetching events or images:', error);
+            }
+        };
+
+        fetchEventsAndImages();
+
+        // Fetch categories
+        axios.get('https://localhost:44317/api/Categories/GetCategories', {
+            headers: {
+                Authorization: `Bearer ${auth.user}`
+            }
+        })
+            .then(response => setCategories(response.data))
             .catch(error => console.error('Error fetching categories:', error));
-    }, []);
+    }, [auth.user]);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -65,9 +84,10 @@ export const EventsPage = () => {
         setIsAssigned(true);
     }
 
-    const handleCardClick = (event) => {  // Adjust according to actual property name
+    const handleCardClick = (event) => {
         if (event.eventId) {
-            navigate(`/event/${event.eventId}`);
+            setSelectedEvent(event);
+            setShowModal(true);
         } else {
             console.error('Event ID is undefined');
         }
@@ -75,8 +95,27 @@ export const EventsPage = () => {
 
     const filteredEvents = events.filter((event) =>
         event.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (selectedCategory === '' || event.catId === selectedCategory) //nu merge. O problema pt alta zi
+        (selectedCategory === '' || event.catId.toString() === selectedCategory)
     );
+
+    const getFirstFiftyWords = (text) => {
+        return text.split(/\s+/).slice(0, 50).join(" ") + "...";
+    };
+
+    const sortEvents = (events) => {
+        switch (sortOrder) {
+            case 'name':
+                return [...events].sort((a, b) => a.title.localeCompare(b.title));
+            case 'date':
+                return [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
+            case 'price':
+                return [...events].sort((a, b) => parseFloat(a.price.replace(/[^0-9.-]+/g,"")) - parseFloat(b.price.replace(/[^0-9.-]+/g,"")));
+            default:
+                return events;
+        }
+    };
+
+    const sortedAndFilteredEvents = sortEvents(filteredEvents);
 
     return (
         <main className="MainEventPage">
@@ -95,19 +134,26 @@ export const EventsPage = () => {
                     </Col>
                     <Col md={4}>
                         <h4>Filter by Category</h4>
-                        <Form.Select nChange={handleCategoryChange}>
+                        <Form.Select onChange={handleCategoryChange}>
                             <option value="">Select category</option>
                             {categories.map((category, index) => (
-                                <option key={index} value={category.id}>{category.name}</option>
+                                <option key={index} value={category.catId}>{category.name}</option>
                             ))}
+                        </Form.Select>
+                        <h4>Sort Events</h4>
+                        <Form.Select onChange={(e) => setSortOrder(e.target.value)}>
+                            <option value="">Sort by...</option>
+                            <option value="name">Name</option>
+                            <option value="date">Date</option>
+                            <option value="price">Price</option>
                         </Form.Select>
                     </Col>
                 </Row>
                 <Row xs={1} md={3} className="g-4">
-                    {filteredEvents.map((event, Id) => (
-                        <Col key={event.eventId || event.id}>
+                    {sortedAndFilteredEvents.map((event) => (
+                        <Col key={event.id}>
                             <Card className="eventPageCard" onClick={() => handleCardClick(event)}>
-                                <Card.Img variant="top" src={imagePaths[Id]}/>
+                                <Card.Img variant="top" src={event.imageUrl} />
                                 <Card.Body>
                                     <Card.Title>{event.title}</Card.Title>
                                     <Card.Text>{event.description}</Card.Text>
@@ -122,20 +168,22 @@ export const EventsPage = () => {
                         <Modal.Title>{selectedEvent?.title}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Card.Img variant="top" src={imagePaths[selectedEvent?.imageId]} />
-                        <p>{selectedEvent?.description}</p>
-                        <p>{selectedEvent?.price}</p>
+                        <Card.Img variant="top" src={selectedEvent?.imageUrl} />
+                        <p>{selectedEvent ? getFirstFiftyWords(selectedEvent.description) : ''}</p>
+                        <p><strong>Price:</strong> {selectedEvent?.price}</p>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleCloseModal}>
                             Close
                         </Button>
-                        <Button variant="primary" onClick={handleAssignToEvent}>
-                            {isAssigned ? "Assigned" : "Assign to event"}
+                        <Button variant="primary" onClick={() => navigate(`/event/${selectedEvent?.eventId}`)}>
+                            More Info
                         </Button>
                     </Modal.Footer>
                 </Modal>
             </Container>
         </main>
     );
-}
+};
+
+export default EventsPage;

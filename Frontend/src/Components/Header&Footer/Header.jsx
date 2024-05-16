@@ -1,20 +1,17 @@
 import React, {useState} from 'react';
 import './Header.css';
 import logo from "../../Assets/logo.png";
-import { useNavigate} from "react-router-dom";
-import {AuthContext} from "../../AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../AuthContext";
 
 
 export const Header = () => {
-    const { isLoggedIn, setIsLoggedIn } = React.useContext(AuthContext); // Add this line
+    const auth = useAuth();
     const navigate = useNavigate();
 
-    // Add a function to handle logout
     const handleLogout = () => {
-        // Clear the token from local storage
-        localStorage.removeItem('token');
-        // Set the isLoggedIn state to false
-        setIsLoggedIn(false);
+        auth.logout();
+        navigate('/');
     };
 
     return (
@@ -27,7 +24,7 @@ export const Header = () => {
                     <li><a href="/events">Events</a></li>
                 </div>
                 <div className="right">
-                    {isLoggedIn ? (
+                    {auth.user ? (
                         <>
                             <button className="headerButton" onClick={() => navigate('../myProfile')}>MyProfile</button>
                             <button className="headerButton" onClick={handleLogout}>Logout</button>

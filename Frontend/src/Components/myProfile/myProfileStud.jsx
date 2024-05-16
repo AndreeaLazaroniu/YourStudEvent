@@ -5,19 +5,25 @@ import axios from "axios";
 import './myProfile.css';
 import myPrf from "../../Assets/myPrf.gif";
 import { useNavigate} from "react-router-dom";
+import {useAuth} from "../../AuthContext";
 
 export const MyProfileStud = () => {
     const [user, setUser] = useState({});
     const [editMode, setEditMode] = useState(false);
     const navigate = useNavigate();
+    const auth = useAuth();
 
     useEffect(() => {
         fetchUserProfile();
-    }, [editMode]);
+    }, [auth.user.token]);
 
     const fetchUserProfile = async () => {
         try {
-            const response = await axios.get('https://localhost:44317/api/account/GetOneUser');
+            const response = await axios.get('https://localhost:44317/api/account/GetOneUser', {
+                headers: {
+                    Authorization: `Bearer ${auth.user.token}`
+                }
+            });
             setUser(response.data);
         } catch (error) {
             console.error('Failed to fetch user data:', error);
@@ -31,10 +37,14 @@ export const MyProfileStud = () => {
 
     const handleSave = async () => {
         try {
-            const response = await axios.put('https://localhost:44317/api/account/updateAccount', user);
+            const response = await axios.put('https://localhost:44317/api/account/updateAccount', user, {
+                headers: {
+                    Authorization: `Bearer ${auth.user.token}`
+                }
+            });
             if (response.status === 200) {
-                setEditMode(false);
                 fetchUserProfile();  // Reload the updated data
+                setEditMode(false);
             }
         } catch (error) {
             console.error('Failed to update user data:', error);
@@ -65,9 +75,7 @@ export const MyProfileStud = () => {
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 height: "100vh",
-                width: "98vw",
-                // position: "fixed",
-                // top: "0"
+                width: "98vw"
             }
         }>
             <Row className="rowElementProfile">

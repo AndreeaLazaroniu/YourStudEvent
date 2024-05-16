@@ -1,3 +1,4 @@
+using BEYourStudEvents.Entities;
 using BEYourStudEvents.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,5 +34,12 @@ public class UploadFileController : ControllerBase
         return fullUri.ToString();
     }
     
+    [HttpGet("getObjFile/{id}")]
+    public async Task<UploadedFile> GetObjByIdAsync(int id)
+    {
+        var image = await _fileService.FindImageAsync(id);
+        
+        return image;
+    }
     
 }

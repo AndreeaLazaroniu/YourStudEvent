@@ -5,7 +5,7 @@ import logo from '../../Assets/logo.png';
 import { MdEmail } from "react-icons/md";
 import { AiOutlineLock } from "react-icons/ai";
 import { useNavigate} from "react-router-dom";
-import {AuthContext} from "../../AuthContext";
+import {useAuth} from "../../AuthContext";
 import collage_events from "../../Assets/collage-events.png";
 
 export const Login = () => {
@@ -13,8 +13,9 @@ export const Login = () => {
     const [UserName, setUserName] = useState('');
     const [Password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [role, setRole] = useState('');
     const navigate = useNavigate();
-    const { setIsLoggedIn } = React.useContext(AuthContext)
+    const auth = useAuth();
 
 
     const handleInputChange = (event) => {
@@ -41,19 +42,18 @@ export const Login = () => {
                 Password
             });
 
-            const result = response.data;
-            localStorage.setItem('token', result.token);
+            auth.login(response.data.token);
 
-            // Set the token in axios headers
-            axios.defaults.headers.common['Authorization'] = `Bearer ${result.token}`;
+            // Get the role of the user
+            const roleResponse = await axios.get(`https://localhost:44317/api/account/getRole/${UserName}`);
 
-            if(response.status){
-                setIsLoggedIn(true);
-                if(UserName === 'Participant2') {
-                    navigate('../myProfileStud');
-                }else{
-                    navigate('../myProfile');
-                }
+            setRole(roleResponse.data);
+
+            // Navigate based on the role
+            if(roleResponse.data === 'Student') {
+                navigate('/myProfileStud');
+            } else if(roleResponse.data === 'Organizer') {
+                navigate('/myProfile');
             }
         }catch (e) {
             if (error.response) {

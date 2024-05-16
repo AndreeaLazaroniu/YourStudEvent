@@ -4,19 +4,25 @@ import axios from "axios";
 import './myProfile.css';
 import myPrf from "../../Assets/myPrf.gif";
 import { useNavigate} from "react-router-dom";
+import {useAuth} from "../../AuthContext";
 
 export const MyProfile = () => {
     const [user, setUser] = useState({});
     const [editMode, setEditMode] = useState(false);
     const navigate = useNavigate();
+    const auth = useAuth();
 
     useEffect(() => {
         fetchUserProfile();
-    }, [editMode]);
+    }, [auth.user.token]);
 
     const fetchUserProfile = async () => {
         try {
-            const response = await axios.get('https://localhost:44317/api/account/GetOneUser');
+            const response = await axios.get('https://localhost:44317/api/account/GetOneUser', {
+                headers: {
+                    Authorization: `Bearer ${auth.user.token}`
+                }
+            });
             setUser(response.data);
         } catch (error) {
             console.error('Failed to fetch user data:', error);
@@ -25,15 +31,21 @@ export const MyProfile = () => {
     };
 
     const handleEdit = () => {
+        console.log("Editing Mode Before Toggle:", editMode);
         setEditMode(true);
+        console.log("Editing Mode After Toggle:", editMode);
     };
 
     const handleSave = async () => {
         try {
-            const response = await axios.put('https://localhost:44317/api/account/updateAccount', user);
+            const response = await axios.put('https://localhost:44317/api/account/updateAccount', user, {
+                headers: {
+                    Authorization: `Bearer ${auth.user.token}`
+                }
+            });
             if (response.status === 200) {
-                setEditMode(false);
                 fetchUserProfile();  // Reload the updated data
+                setEditMode(false);
             }
         } catch (error) {
             console.error('Failed to update user data:', error);
@@ -42,7 +54,12 @@ export const MyProfile = () => {
     };
 
     const handleChange = (e) => {
-        setUser({...user, [e.target.name]: e.target.value});
+        const { name, value } = e.target;
+        console.log("Changing:", name, value); // Check what is being captured when you type
+        setUser(prevUser => ({
+            ...prevUser,
+            [name]: value  // The name attribute in your input must match exactly with the property name in the state.
+        }));
     };
 
     const handleDelete = async () => {
@@ -79,7 +96,7 @@ export const MyProfile = () => {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter UserName"
-                                name="name"
+                                name="userName"
                                 value={user.userName || ''}
                                 onChange={handleChange}
                                 readOnly={!editMode}
@@ -115,7 +132,7 @@ export const MyProfile = () => {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter description"
-                                name="description"
+                                name="orgDescription"
                                 value={user.orgDescription || ''}
                                 onChange={handleChange}
                                 readOnly={!editMode}

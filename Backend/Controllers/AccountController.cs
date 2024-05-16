@@ -40,13 +40,6 @@ public class AccountController : ControllerBase
 
         if (!result.Succeeded) return Unauthorized("Username not found and/or password incorrect");
 
-        // User = new NewUserDto
-        // {
-        //     UserName = user.UserName,
-        //     Email = user.Email,
-        //     Token = _tokenService.CreateToken(user)
-        // };
-
         return Ok(new NewUserDto
         {
             UserName = user.UserName,
@@ -225,5 +218,25 @@ public class AccountController : ControllerBase
         
         return updatedUser;
     }
-    
+
+    [HttpGet("getRole/{userNAme}")]
+    public async Task<string> GetRole(string userNAme)
+    {
+        var user = await _userManager.FindByNameAsync(userNAme);
+        if (user == null)
+        {
+            return null;
+        }
+        
+        var role = await _userManager.GetRolesAsync(user);
+        if (role.Contains("Organizer"))
+        {
+            return "Organizer";
+        }
+        else if (role.Contains("Student"))
+        {
+            return "Student";
+        } else return null;
+    }
+
 }
