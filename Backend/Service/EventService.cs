@@ -16,6 +16,27 @@ public class EventService : IEventService
         _eventRepository = eventRepository;
     }
     
+    public async Task<IEnumerable<EventDto>> GetEventsAsyncByOrg(string orgUserId)
+    {
+        var events = await _eventRepository.GetAllAsync();
+        var eventDtos = events
+            .Where(e=> e.OrgUserId == orgUserId)
+            .Select(e => new EventDto
+            {
+                EventId = e.Id,
+                Title = e.Title,
+                Description = e.Description,
+                Date = e.Date,
+                Location = e.Location,
+                Price = e.Price,
+                Status = e.Status,
+                ImageId = e.ImageId,
+                CatId = e.CatId
+            });
+
+        return eventDtos;
+    }
+    
     public async Task<IEnumerable<EventDto>> GetEventsAsync()
     {
         var events = await _eventRepository.GetAllAsync();
@@ -53,7 +74,14 @@ public class EventService : IEventService
             Price = eventEntity.Price,
             Status = eventEntity.Status,
             ImageId = eventEntity.ImageId,
-            CatId = eventEntity.CatId
+            CatId = eventEntity.CatId,
+            Students = eventEntity.Students.Select(s => new UserDto
+            {
+                Email = s.Email,
+                FirstName = s.FirstName,
+                LastName = s.LastName,
+                University = s.University
+            })
         };
     }
 
@@ -89,7 +117,6 @@ public class EventService : IEventService
             CatId = eventDto.CatId,
             ImageId = eventDto.ImageId,
             OrgUserId = eventDto.OrgUserId
-            // Image = eventDto.Image
         };
         return await _eventRepository.PostAsync(newEvent);
     }

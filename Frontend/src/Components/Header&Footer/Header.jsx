@@ -3,9 +3,11 @@ import './Header.css';
 import logo from "../../Assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
+import axios from "axios";
 
 
 export const Header = () => {
+    const [role, setRole] = useState('');
     const auth = useAuth();
     const navigate = useNavigate();
 
@@ -13,6 +15,19 @@ export const Header = () => {
         auth.logout();
         navigate('/');
     };
+
+    // const handleProfile = () => {
+    //     const roleResponse = await axios.get(`https://localhost:44317/api/account/getRole/${UserName}`);
+    //
+    //     setRole(roleResponse.data);
+    //
+    //     // Navigate based on the role
+    //     if (roleResponse.data === 'Student') {
+    //         navigate('/myProfileStud');
+    //     } else if (roleResponse.data === 'Organizer') {
+    //         navigate('/myProfile');
+    //     }
+    // }
 
     return (
         <div className="Header">
@@ -26,7 +41,7 @@ export const Header = () => {
                 <div className="right">
                     {auth.user ? (
                         <>
-                            <button className="headerButton" onClick={() => navigate('../myProfile')}>MyProfile</button>
+                            <button className="headerButton" onClick={() => navigate('../myProfileStud')}>MyProfile</button>
                             <button className="headerButton" onClick={handleLogout}>Logout</button>
                         </>
                     ) : (

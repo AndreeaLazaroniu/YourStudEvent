@@ -1,3 +1,4 @@
+using BEYourStudEvents.ChatConfig;
 using BEYourStudEvents.Data;
 using BEYourStudEvents.Entities;
 using BEYourStudEvents.Interfaces;
@@ -112,6 +113,7 @@ builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IRepository<Category>, CategoryRepository>();
 builder.Services.AddTransient<IRepository<Event>, EventRepository>();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 // app.UseCors();
@@ -143,5 +145,13 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapHub<ChatHub>("/chathub");
+    }
+);
 
 app.Run();

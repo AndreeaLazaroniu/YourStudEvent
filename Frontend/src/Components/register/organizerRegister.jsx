@@ -77,6 +77,8 @@ export const OrganizerRegister = () => {
                     <textarea name="OrgDescription" value={formData.OrgDescription} onChange={handleInputChange} placeholder="OrgDescription*" required/>
                     <textarea name="Address" value={formData.Address} onChange={handleInputChange} placeholder="Address*" required/>
                     <button type="submit">Register</button>
+
+
                 </form>
             {/*</div>*/}
         </body>

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { Form, Button, Container } from 'react-bootstrap';
 import './CreateEvent.css';
 import { useNavigate} from "react-router-dom";
 import bkg from "../../Assets/bgdGif.gif";
+import {useAuth} from "../../AuthContext";
 
 export const CreateEvent = () => {
     // State to hold form data
@@ -13,12 +14,30 @@ export const CreateEvent = () => {
     const [date, setDate] = useState('');
     const [price, setPrice] = useState('');
     const [status, setStatus] = useState('');
-    const [catId, setCatId] = useState('');
+    const [categories, setCategories] = useState([]);
+    const [catName, setCatName] = useState('');
+    const [catId, setCatId] = useState(0);
     const [imageId, setImageId] = useState('0');
     const [orgUserId, setOrgUserId] = useState('0');
     const [file, setFile] = useState(null);
     const navigate = useNavigate();
     const [error, setError] = useState('');
+    const auth = useAuth();
+
+    // Effect to fetch categories from the API
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get('https://localhost:44317/api/Categories/GetCategories');
+                setCategories(response.data);  // Assuming response data is the array of categories
+            } catch (error) {
+                console.error('Failed to fetch categories:', error);
+                setError(error.message);
+            }
+        };
+
+        fetchCategories();
+    }, []);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -41,6 +60,9 @@ export const CreateEvent = () => {
                 break;
             case 'status':
                 setStatus(value);
+                break;
+            case 'catName':
+                setCatName(value);
                 break;
             case 'catId':
                 setCatId(value);
@@ -71,18 +93,6 @@ export const CreateEvent = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        console.log({
-            title,
-            description,
-            location,
-            date,
-            price,
-            status,
-            catId,
-            imageId,
-            orgUserId
-        });
-
         try {
             const eventResponse = await axios.post('https://localhost:44317/api/Events/CreateEvent', {
                 title,
@@ -91,20 +101,22 @@ export const CreateEvent = () => {
                 date,
                 price,
                 status,
+                catName,
                 catId,
                 imageId,
                 orgUserId
-            });
+            }, {
+                headers: {
+                    Authorization: `Bearer ${auth.user.token}`, // Include auth token if needed
+                }}
+            );
             console.log(eventResponse);
-
-            const eventResult = eventResponse.data;
-            console.log(eventResult);
 
             if(eventResponse.status){
                 navigate('../myProfile');
             }
 
-        }catch (e) {
+        }catch (error) {
             if (error.response) {
                 setError(error.response.data.message);
                 console.error('error:', error.response.data.message);
@@ -162,8 +174,15 @@ export const CreateEvent = () => {
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formCatId">
-                        <Form.Label>Category ID</Form.Label>
-                        <Form.Control type="number" placeholder="Enter category ID" name="catId" value={catId} onChange={handleInputChange} required />
+                        <Form.Label>Category</Form.Label>
+                        <Form.Control as="select" name="catName" onChange={handleInputChange} required>
+                            <option value="">Select a category</option>
+                            {categories.map(category => (
+                                <option key={category.id} value={category.id}>
+                                    {category.name}
+                                </option>
+                            ))}
+                        </Form.Control>
                     </Form.Group>
 
                     <Form.Group controlId="formFile" className="mb-3">

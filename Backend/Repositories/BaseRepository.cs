@@ -36,6 +36,18 @@ public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : clas
         }
     }
     
+    public virtual async Task<TEntity?> FindByNameAsync(String name)
+    {
+        try
+        {
+            return await _context.Set<TEntity>().FindAsync(name);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error when retrieving entity by name {name}, {ex.Message}", ex);
+        }
+    }
+    
     public virtual async Task<TEntity?> FindUserByIdAsync(String id)
     {
         try

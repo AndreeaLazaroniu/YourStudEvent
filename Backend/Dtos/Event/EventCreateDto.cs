@@ -10,8 +10,8 @@ public class EventCreateDto
     public DateTime Date { get; set; }
     public string Price { get; set; }
     public string Status { get; set; }
+    public string CatName { get; set; }
     public int CatId { get; set; }
     public int ImageId { get; set; }
-    // public UploadedFile Image { get; set; }
     public string OrgUserId { get; set; }
 }

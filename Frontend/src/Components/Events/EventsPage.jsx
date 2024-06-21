@@ -99,7 +99,7 @@ export const EventsPage = () => {
     );
 
     const getFirstFiftyWords = (text) => {
-        return text.split(/\s+/).slice(0, 50).join(" ") + "...";
+        return text.split(/\s+/).slice(0, 5).join(" ") + "...";
     };
 
     const sortEvents = (events) => {
@@ -156,7 +156,7 @@ export const EventsPage = () => {
                                 <Card.Img variant="top" src={event.imageUrl} />
                                 <Card.Body>
                                     <Card.Title>{event.title}</Card.Title>
-                                    <Card.Text>{event.description}</Card.Text>
+                                    <Card.Text>{getFirstFiftyWords(event.description)}</Card.Text>
                                     <Card.Text>{event.price}</Card.Text>
                                 </Card.Body>
                             </Card>

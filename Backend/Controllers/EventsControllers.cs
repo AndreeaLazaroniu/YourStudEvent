@@ -18,12 +18,14 @@ public class EventsControllers : ControllerBase
     private readonly IEventService _eventService;
     private readonly UserManager<AppUser> _userManager;
     private readonly IFileService _fileService;
+    private readonly ICategoryService _categoryService;
     
-    public EventsControllers(IEventService eventService, UserManager<AppUser> userManager, IFileService fileService)
+    public EventsControllers(IEventService eventService, UserManager<AppUser> userManager, IFileService fileService, ICategoryService categoryService)
     {
         _eventService = eventService;
         _userManager = userManager;
         _fileService = fileService;
+        _categoryService = categoryService;
     }
     
     [HttpGet("GetEvents")]
@@ -34,6 +36,27 @@ public class EventsControllers : ControllerBase
         return events;
         //return Ok(events);
     }
+    
+    [Authorize]
+    [HttpGet("GetEventsByOrg")]
+    public async Task<IEnumerable<EventDto>> GetEventsByOrg()
+    {
+        var email = User.FindFirstValue(ClaimTypes.Email);
+        if (string.IsNullOrEmpty(email))
+        {
+            return null;
+        }
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            return null;
+        }
+        
+        var events = await _eventService.GetEventsAsyncByOrg(user.Id);
+        
+        return events;
+    }
+    
     
     [HttpGet("GetEvent/{eventId}", Name = "GetEvent")]
     public async Task<EventDto> GetEvent(int eventId)
@@ -63,6 +86,11 @@ public class EventsControllers : ControllerBase
     [HttpPost("CreateEvent")]
     public async Task<IActionResult> CreateEvent([FromBody]EventCreateDto eventDto)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState); // This will return what part of the model is invalid
+        }
+        
         var email = User.FindFirstValue(ClaimTypes.Email);
         if (string.IsNullOrEmpty(email))
         {
@@ -79,11 +107,16 @@ public class EventsControllers : ControllerBase
         {
             return BadRequest("No image has been uploaded.");
         }
-        eventDto.ImageId = image.Id;
-        // eventDto.Image = image;
         
-        // Set the Organizer UserId
+        var category = await _categoryService.GetByNameAsync(eventDto.CatName);
+        if (category == null)
+        {
+            return BadRequest("Category not found.");
+        }
+        
+        eventDto.ImageId = image.Id;
         eventDto.OrgUserId = user.Id;
+        eventDto.CatId = category.CatId;
 
         try
         {
@@ -93,7 +126,7 @@ public class EventsControllers : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(500, "An error occurred while creating the event.");
+            return StatusCode(500, "An error occurred while creating the event. Please check.");
         }
     }
     
@@ -118,9 +151,33 @@ public class EventsControllers : ControllerBase
         return Ok(updatedEvent);
     }
     
+    [Authorize]
     [HttpPost("AddStudent/{eventId}")]
-    public async Task<ActionResult<UserDto>> AddStudent(int eventId, [FromBody] UserDto userDto)
+    public async Task<ActionResult<UserDto>> AddStudent(int eventId)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState); // This will return what part of the model is invalid
+        }
+        
+        var email = User.FindFirstValue(ClaimTypes.Email);
+        if (string.IsNullOrEmpty(email))
+        {
+            return Unauthorized("User must be logged in.");
+        }
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            return Unauthorized("User not found.");
+        }
+        
+        UserDto userDto = new UserDto
+        {
+            Email = user.Email,
+            FirstName = user.FirstName,
+            LastName = user.LastName
+        };
+        
         var students = await _eventService.AddStudentAsync(eventId, userDto);
 
         return Ok(students);

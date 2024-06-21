@@ -54,22 +54,22 @@
     padding: 6px; /* Adjust padding for file inputs */
 }
 
-/* Button styling */
-.CreateEventMain .button, .btn-primary {
-    background-color: #0056b3; /* Primary button color */
-    color: white; /* Text color for primary button */
-    border: none; /* No border for a cleaner look */
-    padding: 10px 15px; /* Padding for button */
-    font-size: 1rem; /* Font size for button text */
-    border-radius: 4px; /* Rounded corners for the button */
-    cursor: pointer; /* Cursor to pointer to indicate it's clickable */
-    display: inline-block; /* Align properly without taking full width */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
-}
+/*!* Button styling *!*/
+/*.CreateEventMain .button, .btn-primary {*/
+/*    background-color: #0056b3; !* Primary button color *!*/
+/*    color: white; !* Text color for primary button *!*/
+/*    border: none; !* No border for a cleaner look *!*/
+/*    padding: 10px 15px; !* Padding for button *!*/
+/*    font-size: 1rem; !* Font size for button text *!*/
+/*    border-radius: 4px; !* Rounded corners for the button *!*/
+/*    cursor: pointer; !* Cursor to pointer to indicate it's clickable *!*/
+/*    display: inline-block; !* Align properly without taking full width *!*/
+/*    transition: background-color 0.3s; !* Smooth transition for hover effect *!*/
+/*}*/
 
-.CreateEventMain .btn-primary:hover {
-    background-color: #004095; /* Darker shade on hover */
-}
+/*.CreateEventMain .btn-primary:hover {*/
+/*    background-color: #004095; !* Darker shade on hover *!*/
+/*}*/
 
 /* Handling responsiveness */
 @media (max-width: 768px) {

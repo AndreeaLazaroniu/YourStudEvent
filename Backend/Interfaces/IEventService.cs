@@ -13,4 +13,5 @@ public interface IEventService
     Task DeleteEventAsync(int id);
     Task<EventDto> UpdateEventAsync(EventUpdateDto eventDto);
     Task<IEnumerable<UserDto>> AddStudentAsync(int eventId, UserDto userDto);
+    Task<IEnumerable<EventDto>> GetEventsAsyncByOrg(string orgUserId);
 }

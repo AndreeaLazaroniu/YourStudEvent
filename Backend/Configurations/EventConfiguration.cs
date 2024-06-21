@@ -11,7 +11,6 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
     {
         builder.ToTable("Events").HasKey(c => c.Id);
         
-        //builder.Property(m=>m.EventId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
         builder.Property(c=>c.Title).IsRequired().HasMaxLength(100);
         builder.Property(c=>c.Description).IsRequired();
         builder.Property(c=>c.Location).IsRequired();

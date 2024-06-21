@@ -70,6 +70,31 @@ public class CategoryService : ICategoryService
 
         return categoryDto;
     }
+    
+    public async Task<CategoryDto> GetByNameAsync(string name)
+    {
+        var category = await _categoryRepository.FindByNameAsync(name);
+        if (category == null)
+        {
+            return null;
+        }
+        
+        CategoryDto categoryDto = new CategoryDto
+        {
+            CatId = category.CatId,
+            Name = category.Name,
+            Events = category.Events.Select(e => new EventDto
+            {
+                EventId = e.Id,
+                Title = e.Title,
+                Description = e.Description,
+                Date = e.Date,
+                Location = e.Location
+            })
+        };
+
+        return categoryDto;
+    }
 
     public async Task<Category> UpdateAsync(Category category)
     {

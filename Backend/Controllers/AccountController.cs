@@ -162,7 +162,7 @@ public class AccountController : ControllerBase
         return users;
     }
     
-    [Authorize]
+    // [Authorize]
     [HttpDelete("deleteAccount")]
     public async Task<IActionResult> DeleteUser()
     {
@@ -183,7 +183,7 @@ public class AccountController : ControllerBase
         return Ok();
     }
     
-    [Authorize]
+    // [Authorize]
     [HttpGet("GetOneUser")]
     public async Task<UserDto?> GetUser()
     {
@@ -198,7 +198,7 @@ public class AccountController : ControllerBase
         return user;
     }
     
-    [Authorize]
+    // [Authorize]
     [HttpPut("updateAccount")]
     public async Task<AppUser> UpdateUser([FromBody] UserDto user)
     {

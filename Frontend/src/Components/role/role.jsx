@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import axios from "axios";
 import './role.css';
 import participant from '../../Assets/participant.png';
 import organizer from '../../Assets/organizer.png';

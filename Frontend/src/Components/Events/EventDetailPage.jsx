@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import {useAuth} from "../../AuthContext";
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 export const EventDetailPage = () => {
     const { Id } = useParams();
@@ -36,9 +37,9 @@ export const EventDetailPage = () => {
 
     const handleAssignToEvent = async () => {
         try {
-            const response = await axios.get(`https://localhost:44317/api/Events/AddStudent/${Id}`, {
+            const response = await axios.post(`https://localhost:44317/api/Events/AddStudent/${Id}`, {}, {
                 headers: {
-                    Authorization: `Bearer ${auth.user}`, // Include auth token if needed
+                    Authorization: `Bearer ${auth.user.token}`, // Include auth token if needed
                 }
             });
             if (response.status === 200) {
@@ -53,14 +54,51 @@ export const EventDetailPage = () => {
     };
 
     return (
-        <div>
-            <h1>{eventDetails.title}</h1>
-            <img src={imageInfo.fullPath} alt="Event" />
-            <p>{eventDetails.description}</p>
-            <p>{eventDetails.price}</p>
-            <button onClick={handleAssignToEvent} className="btn btn-primary">Assign to Me</button>
-        </div>
+        <main className="EventDetailMain">
+            <Container className="EventDetailContainer">
+                {/* Image at the top */}
+                <Row className="mb-3">
+                    <Col xs={12}>
+                        <img src={imageInfo.fullPath} alt="Event" style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
+                    </Col>
+                </Row>
+
+                {/* Title and Organizer Name */}
+                <Row className="mb-3">
+                    <Col xs={12}>
+                        <h1>{eventDetails.title}</h1>
+                        <p>Organized by: {eventDetails.orgName}</p> {/* Assuming organizerName is a property */}
+                    </Col>
+                </Row>
+
+                {/* Description and Assign Button */}
+                <Row>
+                    <Col md={8}>
+                        <Card>
+                            <Card.Body>
+                                <Card.Title>Description</Card.Title>
+                                <Card.Text>
+                                    {eventDetails.description}
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col md={4}>
+                        <Card>
+                            <Card.Body>
+                                <Card.Title>Join This Event</Card.Title>
+                                <Button onClick={handleAssignToEvent} className="btn btn-primary w-100 mb-3">Assign to Me</Button>
+                                <Card.Text>
+                                    Price: {eventDetails.price}
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+        </main>
     );
+
 };
 
 export default EventDetailPage;

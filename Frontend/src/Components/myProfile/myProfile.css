@@ -1,8 +1,23 @@
-/* Container styling for center alignment and padding */
+.myProfilePageMain{
+    font-family: 'Noto Sans JP', sans-serif;
+    padding-top: 20px; /* Equal to header height */
+    padding-bottom: 60px; /* Equal to footer height */
+    flex-grow: 1; /* Makes sure the content takes the available space */
+    display: flex; /* Makes the .main a flex container */
+    justify-content: center; /* Centers content vertically */
+    align-items: center; /* Centers content horizontally */
+    background-color: #f4f4e1;
+}
+
 .profile-container {
-    display: flex;
-    justify-content: center;
-    padding: 20px;
+    margin-top: 80px;
+    max-width: 90%;
+    max-height: 100%;
+    background-color: #f9f9f9; /* Light background for the container */
+    padding-bottom: 20px; /* Bottom padding */
+    border-radius: 8px; /* Rounded corners */
+    /*border-bottom-color: black;*/
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
 }
 
 .rowElementProfile{
@@ -57,3 +72,13 @@
     background-color: #dc3545;
     color: white;
 }
+
+.events-profile, .button-create {
+    margin-top: 100px;
+    margin-left: 20px;
+    padding-right: 10px;
+    /*border-radius: 70px;*/
+}
+
+
+

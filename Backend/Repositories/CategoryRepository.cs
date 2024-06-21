@@ -31,4 +31,9 @@ public class CategoryRepository : BaseRepository<Category>
             throw new Exception($"Error when retrieving entity by id {id}, {ex.Message}", ex);
         }
     }
+    
+    public override async Task<Category?> FindByNameAsync(string name)
+    {
+        return await _context.Categories.FirstOrDefaultAsync(c => c.Name == name);
+    }
 }

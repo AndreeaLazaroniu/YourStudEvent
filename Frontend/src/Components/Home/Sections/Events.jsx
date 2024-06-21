@@ -1,26 +1,21 @@
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import {Container, Row, Col, Card, Button} from 'react-bootstrap';
 import React, {useEffect} from 'react';
 import './Events.css';
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 export const Events = () => {
     const [events, setEvents] = React.useState([]);
     const [imagePaths, setImagePaths] = React.useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('https://localhost:44317/api/Events/GetEvents')
+        axios.get('https://localhost:44317/api/Events/GetEvents')
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
+                const data = response.data.slice(0, 6); // Limit the events to 6
                 setEvents(data);
-                return data;
-            })
-            .then(events => {
-                const fetchImagePaths = events.map(event =>
+
+                const fetchImagePaths = data.map(event =>
                     axios.get(`https://localhost:44317/api/content/getFile/${event.imageId}`)
                         .then(response => response.data)
                 );
@@ -29,6 +24,10 @@ export const Events = () => {
             .then(setImagePaths)
             .catch(error => console.error('Error fetching events:', error));
     }, []);
+
+    const handleSeeMore = () => {
+        navigate('/events'); // Navigate to the events page or a specific URL
+    };
 
     return (
         <body className="mainEventsHome">
@@ -48,6 +47,7 @@ export const Events = () => {
                         </Col>
                     ))}
                 </Row>
+                <button onClick={handleSeeMore} className="seeMore-button">See More</button>
             </div>
         </body>
     );
