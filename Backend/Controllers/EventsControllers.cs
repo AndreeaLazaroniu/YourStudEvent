@@ -37,7 +37,7 @@ public class EventsControllers : ControllerBase
         //return Ok(events);
     }
     
-    [Authorize]
+    // [Authorize]
     [HttpGet("GetEventsByOrg")]
     public async Task<IEnumerable<EventDto>> GetEventsByOrg()
     {

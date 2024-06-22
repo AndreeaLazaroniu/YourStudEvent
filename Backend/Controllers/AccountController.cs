@@ -238,5 +238,33 @@ public class AccountController : ControllerBase
             return "Student";
         } else return null;
     }
+    
+    // [Authorize]
+    [HttpGet("getRole")]
+    public async Task<string> GetRole(/*string userNAme*/)
+    {
+        // var user = await _userManager.FindByNameAsync(userNAme);
+        
+        var email = User.FindFirstValue(ClaimTypes.Email);
+        if (string.IsNullOrEmpty(email))
+        {
+            return "User must be logged in.";
+        }
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            return null;
+        }
+        
+        var role = await _userManager.GetRolesAsync(user);
+        if (role.Contains("Organizer"))
+        {
+            return "Organizer";
+        }
+        else if (role.Contains("Student"))
+        {
+            return "Student";
+        } else return null;
+    }
 
 }

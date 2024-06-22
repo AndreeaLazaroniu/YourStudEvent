@@ -86,22 +86,13 @@ export const MyProfile = () => {
 
     return (
         <main className={'myProfilePageMain'}>
-            <div className="profile-container"
-            //      style={
-            //     {backgroundImage: `url(${myPrf})`,
-            //         backgroundSize: "cover",
-            //         backgroundRepeat: "no-repeat",
-            //         backgroundPosition: "center",
-            //         height: "100vh",
-            //         width: "98vw"
-            //     }
-            // }
-            >
+            <Box className = {"background-image-org"}></Box>
+            <div className="profile-container">
                 <Box className="rowElementProfile">
                     <Grid item sm={6} md={4}>
                         <Form>
                             <Form.Group className="formGroupProfile" controlId="formGroupName">
-                                <Form.Label className="text-inputProfile">Username</Form.Label>
+                                <Form.Label className="text-inputProfile" style={{ fontWeight: 'bold' }}>Username</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="Enter UserName"
@@ -113,7 +104,7 @@ export const MyProfile = () => {
                             </Form.Group>
 
                             <Form.Group className="formGroupProfile" controlId="formGroupEmail">
-                                <Form.Label className="text-inputProfile">Email</Form.Label>
+                                <Form.Label className="text-inputProfile" style={{ fontWeight: 'bold' }}>Email</Form.Label>
                                 <Form.Control
                                     type="email"
                                     placeholder="Enter email"
@@ -125,7 +116,7 @@ export const MyProfile = () => {
                             </Form.Group>
 
                             <Form.Group className="formGroupProfile" controlId="formGroupName">
-                                <Form.Label className="text-inputProfile">Name Organizer</Form.Label>
+                                <Form.Label className="text-inputProfile" style={{ fontWeight: 'bold' }}>Name Organizer</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="Enter name"
@@ -137,7 +128,7 @@ export const MyProfile = () => {
                             </Form.Group>
 
                             <Form.Group className="formGroupProfile" controlId="formGroupName">
-                                <Form.Label className="text-inputProfile">Organizer Description</Form.Label>
+                                <Form.Label className="text-inputProfile" style={{ fontWeight: 'bold' }}>Organizer Description</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="Enter description"
@@ -149,7 +140,7 @@ export const MyProfile = () => {
                             </Form.Group>
 
                             <Form.Group className="formGroupProfile" controlId="formGroupName">
-                                <Form.Label className="text-inputProfile">Phone Number</Form.Label>
+                                <Form.Label className="text-inputProfile" style={{ fontWeight: 'bold' }}>Phone Number</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="Enter phone number"
@@ -161,7 +152,7 @@ export const MyProfile = () => {
                             </Form.Group>
 
                             <Form.Group className="formGroupProfile" controlId="formGroupName">
-                                <Form.Label className="text-inputProfile">Address</Form.Label>
+                                <Form.Label className="text-inputProfile" style={{ fontWeight: 'bold' }}>Address</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="Enter address"

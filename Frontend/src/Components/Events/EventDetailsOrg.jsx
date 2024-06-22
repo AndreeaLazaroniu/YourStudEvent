@@ -5,7 +5,7 @@ import {useAuth} from "../../AuthContext";
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import {Box} from "@mui/material";
 
-export const EventDetailPage = () => {
+export const EventDetailsOrg = () => {
     const { Id } = useParams();
     console.log(Id);
     const [eventDetails, setEventDetails] = useState({});
@@ -102,4 +102,4 @@ export const EventDetailPage = () => {
 
 };
 
-export default EventDetailPage;
+export default EventDetailsOrg;
