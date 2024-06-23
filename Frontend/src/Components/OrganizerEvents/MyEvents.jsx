@@ -5,6 +5,7 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../AuthContext";
 import {Box} from "@mui/material";
+import {format} from "date-fns";
 
 export const MyEvents = () => {
     const [events, setEvents] = useState([]);
@@ -102,6 +103,7 @@ export const MyEvents = () => {
                                     <Card.Title>{event.title}</Card.Title>
                                     <Card.Text>{getFirstFiftyWords(event.description)}</Card.Text>
                                     <Card.Text>{event.price}</Card.Text>
+                                    <Card.Text>{format(new Date(event.date), 'yyyy-MM-dd')}</Card.Text>
                                 </Card.Body>
                             </Card>
                         </Col>

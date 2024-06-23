@@ -82,7 +82,7 @@ public class EventsControllers : ControllerBase
         return Ok(students);
     }
     
-    [Authorize]
+    // [Authorize]
     [HttpPost("CreateEvent")]
     public async Task<IActionResult> CreateEvent([FromBody]EventCreateDto eventDto)
     {
@@ -151,7 +151,7 @@ public class EventsControllers : ControllerBase
         return Ok(updatedEvent);
     }
     
-    [Authorize]
+    // [Authorize]
     [HttpPost("AddStudent/{eventId}")]
     public async Task<ActionResult<UserDto>> AddStudent(int eventId)
     {
@@ -181,6 +181,37 @@ public class EventsControllers : ControllerBase
         var students = await _eventService.AddStudentAsync(eventId, userDto);
 
         return Ok(students);
+    }
+    
+    [HttpPost("RemoveStudent/{eventId}")]
+    public async Task<ActionResult<UserDto>> RemoveStudent(int eventId)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var email = User.FindFirstValue(ClaimTypes.Email);
+        if (string.IsNullOrEmpty(email))
+        {
+            return Unauthorized("User must be logged in.");
+        }
+
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            return Unauthorized("User not found.");
+        }
+
+        try
+        {
+            var students = await _eventService.RemoveStudentAsync(eventId, user.Email);
+            return Ok(students);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
     
 }

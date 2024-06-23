@@ -4,7 +4,7 @@ import './EventsPage.css';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../AuthContext";
-import {Box} from "@mui/material";
+import { format } from 'date-fns';
 
 export const EventsPage = () => {
     const [events, setEvents] = useState([]);
@@ -110,7 +110,19 @@ export const EventsPage = () => {
             case 'date':
                 return [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
             case 'price':
-                return [...events].sort((a, b) => parseFloat(a.price.replace(/[^0-9.-]+/g,"")) - parseFloat(b.price.replace(/[^0-9.-]+/g,"")));
+                return [...events].sort((a, b) => {
+                    // Convert price string to a number, treat 'free' as 0 or another appropriate value
+                    const getPriceValue = (price) => {
+                        if (price.toLowerCase() === 'free') {
+                            return 0;  // Or another default value that makes sense for your application
+                        }
+                        return parseFloat(price.replace(/\D/g, '')); // Remove non-numeric characters and parse
+                    };
+
+                    let priceA = getPriceValue(a.price);
+                    let priceB = getPriceValue(b.price);
+                    return priceA - priceB;
+                });
             default:
                 return events;
         }
@@ -158,6 +170,7 @@ export const EventsPage = () => {
                                     <Card.Title>{event.title}</Card.Title>
                                     <Card.Text>{getFirstFiftyWords(event.description)}</Card.Text>
                                     <Card.Text>{event.price}</Card.Text>
+                                    <Card.Text>{event.date}</Card.Text>
                                 </Card.Body>
                             </Card>
                         </Col>

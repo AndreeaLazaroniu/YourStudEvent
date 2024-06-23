@@ -1,3 +1,4 @@
+using BEYourStudEvents.Data;
 using BEYourStudEvents.Dtos.Account;
 using BEYourStudEvents.Dtos.Event;
 using BEYourStudEvents.Entities;
@@ -10,10 +11,12 @@ namespace BEYourStudEvents.Service;
 public class EventService : IEventService
 {
     private readonly IRepository<Event> _eventRepository;
+    private readonly UserManager<AppUser> _userManager;
     
-    public EventService(IRepository<Event> eventRepository)
+    public EventService(IRepository<Event> eventRepository, UserManager<AppUser> userManager)
     {
         _eventRepository = eventRepository;
+        _userManager = userManager;
     }
     
     public async Task<IEnumerable<EventDto>> GetEventsAsyncByOrg(string orgUserId)
@@ -185,4 +188,31 @@ public class EventService : IEventService
         return users;
     }
     
+    public async Task<IEnumerable<UserDto>> RemoveStudentAsync(int eventId, string userEmail)
+    {
+        var eventWithUsers = await _eventRepository.FindByIdAsync(eventId);
+        if (eventWithUsers == null)
+        {
+            throw new Exception($"Event with id {eventId} not found");
+        }
+    
+        var userToRemove = eventWithUsers.Students.FirstOrDefault(s => s.Email == userEmail);
+        if (userToRemove == null)
+        {
+            throw new Exception("Student not found in event");
+        }
+    
+        eventWithUsers.Students.Remove(userToRemove);
+        await _eventRepository.UpdateAsync(eventWithUsers);
+    
+        var updatedUsers = eventWithUsers.Students.Select(s => new UserDto
+        {
+            Email = s.Email,
+            FirstName = s.FirstName,
+            LastName = s.LastName,
+            University = s.University
+        }).ToList();
+
+        return updatedUsers;
+    }
 }

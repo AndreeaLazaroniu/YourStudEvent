@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 import {useAuth} from "../../AuthContext";
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import {Box} from "@mui/material";
+import {format} from "date-fns";
 
 export const EventDetailsOrg = () => {
     const { Id } = useParams();
-    console.log(Id);
     const [eventDetails, setEventDetails] = useState({});
     const [imageInfo, setImageInfo] = useState({});
     const auth = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchEventAndImage = async () => {
@@ -36,21 +37,22 @@ export const EventDetailsOrg = () => {
         fetchEventAndImage();
     }, [Id]); // Effect dependency on Id
 
-    const handleAssignToEvent = async () => {
+    const handleDeleteEvent = async () => {
         try {
-            const response = await axios.post(`https://localhost:44317/api/Events/AddStudent/${Id}`, {}, {
+            const response = await axios.delete(`https://localhost:44317/api/Events/${Id}`, {
                 headers: {
-                    Authorization: `Bearer ${auth.user.token}`, // Include auth token if needed
+                    Authorization: `Bearer ${auth.user.token}`
                 }
             });
-            if (response.status === 200) {
-                alert('You have been assigned to this event successfully.');
+            if (response.status === 200 || response.status === 204) { // Handle successful response
+                alert('Event deleted successfully.');
+                navigate('/MyEvents'); // Redirect to MyEvents page
             } else {
-                alert('Failed to assign the event.');
+                alert('Failed to delete the event.');
             }
         } catch (error) {
-            console.error('Error assigning event:', error);
-            alert('Error assigning event.');
+            console.error('Error deleting event:', error);
+            alert('Error deleting event.');
         }
     };
 
@@ -87,11 +89,10 @@ export const EventDetailsOrg = () => {
                     <Col md={4}>
                         <Card>
                             <Card.Body>
-                                <Card.Title>Join This Event</Card.Title>
-                                <Button onClick={handleAssignToEvent} className="btn btn-primary w-100 mb-3">Assign to Me</Button>
-                                <Card.Text>
-                                    Price: {eventDetails.price}
-                                </Card.Text>
+                                <Card.Title>You can delete this event:</Card.Title>
+                                <Button onClick={handleDeleteEvent} className="btn btn-danger w-100 mb-3">Delete Event</Button>
+                                <Card.Text>Price: {eventDetails.price}</Card.Text>
+                                <Card.Text>Date: {eventDetails.date}</Card.Text>
                             </Card.Body>
                         </Card>
                     </Col>

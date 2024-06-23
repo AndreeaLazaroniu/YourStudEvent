@@ -84,6 +84,10 @@ export const MyProfile = () => {
         navigate('../MyEvents');
     }
 
+    const handleStatistics = () => {
+        navigate('../Statistics');
+    }
+
     return (
         <main className={'myProfilePageMain'}>
             <Box className = {"background-image-org"}></Box>
@@ -175,6 +179,7 @@ export const MyProfile = () => {
                     <Box className="events-profile">
                         <Button className="button-events" onClick={handleMyEvents} style={{ marginTop: '10px' }}>My Events</Button>
                         <Button className="button-create" onClick={handleCreateEvent} style={{ marginTop: '10px' }}>Create Event</Button>
+                        {/*<Button className="button-statistics" onClick={handleStatistics} style={{ marginTop: '10px', marginLeft: '20px' }}>Statistics</Button>*/}
                     </Box>
                 </Box>
             </div>

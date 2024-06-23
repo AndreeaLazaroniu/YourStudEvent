@@ -15,5 +15,6 @@ public class EventDto
     public int ImageId { get; set; }
     public string OrgUserId { get; set; }   
     
+    public int NumberOfStudents { get; set; }
     public IEnumerable<UserDto> Students { get; set; }
 }
