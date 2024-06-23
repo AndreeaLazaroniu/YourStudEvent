@@ -7,7 +7,6 @@ import bkg from "../../Assets/bgdGif3.gif";
 import {useAuth} from "../../AuthContext";
 
 export const CreateEvent = () => {
-    // State to hold form data
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
@@ -24,7 +23,6 @@ export const CreateEvent = () => {
     const [error, setError] = useState('');
     const auth = useAuth();
 
-    // Effect to fetch categories from the API
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -89,7 +87,6 @@ export const CreateEvent = () => {
         console.log(uploadResponse);
     }
 
-    // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
 

@@ -64,7 +64,6 @@ export const OrganizerRegister = () => {
                 top: "0"
             }
         }>
-            {/*<div className="organizerRegister">*/}
                 <h2 className="organizerRegister-heading">Organizer<br/>Registration</h2>
                 {error && <p>{error}</p>}
                 <form className="organizerRegister-form" onSubmit={handleSubmit}>
@@ -80,7 +79,6 @@ export const OrganizerRegister = () => {
 
 
                 </form>
-            {/*</div>*/}
         </body>
     );
 };

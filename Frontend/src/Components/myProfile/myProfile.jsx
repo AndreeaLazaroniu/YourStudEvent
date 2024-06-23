@@ -27,7 +27,6 @@ export const MyProfile = () => {
             setUser(response.data);
         } catch (error) {
             console.error('Failed to fetch user data:', error);
-            // Optionally handle the error (e.g., show a notification)
         }
     };
 
@@ -45,21 +44,20 @@ export const MyProfile = () => {
                 }
             });
             if (response.status === 200) {
-                fetchUserProfile();  // Reload the updated data
+                fetchUserProfile();
                 setEditMode(false);
             }
         } catch (error) {
             console.error('Failed to update user data:', error);
-            // Optionally handle the error
         }
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log("Changing:", name, value); // Check what is being captured when you type
+        console.log("Changing:", name, value);
         setUser(prevUser => ({
             ...prevUser,
-            [name]: value  // The name attribute in your input must match exactly with the property name in the state.
+            [name]: value
         }));
     };
 
@@ -72,7 +70,6 @@ export const MyProfile = () => {
             }
         } catch (error) {
             console.error('Failed to delete user account:', error);
-            // Optionally handle the error
         }
     };
 

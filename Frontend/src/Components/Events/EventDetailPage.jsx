@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from "../../AuthContext";
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import {format} from "date-fns";
 
 export const EventDetailPage = () => {
     const { Id } = useParams();
@@ -53,7 +52,6 @@ export const EventDetailPage = () => {
                 alert('Error assigning event.');
             }
         } else {
-            // Perform the unassigning API call
             try {
                 const response = await axios.post(`https://localhost:44317/api/Events/RemoveStudent/${Id}`, {}, {
                     headers: {
@@ -86,7 +84,7 @@ export const EventDetailPage = () => {
                 <Row className="mb-3">
                     <Col xs={12}>
                         <h1>{eventDetails.title}</h1>
-                        <p>Organized by: {eventDetails.orgName}</p>
+                        <p>Location: {eventDetails.location}</p>
                     </Col>
                 </Row>
 

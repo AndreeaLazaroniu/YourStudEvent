@@ -25,7 +25,7 @@ public class UploadFileController : ControllerBase
     [HttpGet("getFile/{id}")]
     public async Task<String> GetPathByIdAsync(int id)
     {
-        string baseUrl = "https://localhost:44317";
+        string baseUrl = "https://0.0.0.0:44317";
         var image = await _fileService.FindImageAsync(id);
         
         Uri baseUri = new Uri(baseUrl);

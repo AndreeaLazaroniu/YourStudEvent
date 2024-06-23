@@ -14,7 +14,6 @@ using Microsoft.Extensions.FileProviders;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -94,18 +93,6 @@ builder.Services.AddAuthentication(options =>
     }
 );
 
-// builder.Services.AddCors(options =>  
-// {  
-//       
-//     options.AddDefaultPolicy(  
-//         policy =>  
-//         {  
-//             policy.WithOrigins("http://localhost:3000")  
-//                 .AllowAnyHeader()  
-//                 .AllowAnyMethod();  
-//         });  
-// });
-
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IEventService, EventService>();
@@ -116,7 +103,6 @@ builder.Services.AddTransient<IRepository<Event>, EventRepository>();
 builder.Services.AddSignalR();
 
 var app = builder.Build();
-// app.UseCors();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -138,7 +124,6 @@ app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
     .AllowCredentials()
-    //.WithOrigins("https://localhost:44351))
     .SetIsOriginAllowed(origin => true));
 
 app.UseAuthentication();

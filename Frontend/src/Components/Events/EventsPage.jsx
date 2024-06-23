@@ -4,7 +4,6 @@ import './EventsPage.css';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../AuthContext";
-import { format } from 'date-fns';
 
 export const EventsPage = () => {
     const [events, setEvents] = useState([]);
@@ -29,7 +28,6 @@ export const EventsPage = () => {
                 });
                 const eventsData = eventResponse.data;
 
-                // Fetch images for each event and combine them with event data
                 const imagePaths = await Promise.all(eventsData.map(async (event) => {
                     try {
                         const imageResponse = await axios.get(`https://localhost:44317/api/content/getObjFile/${event.imageId}`, {
@@ -48,7 +46,6 @@ export const EventsPage = () => {
                 }));
 
                 console.log("Image paths and events combined: ", imagePaths);
-                // Update events state with images
                 setEvents(imagePaths);
 
             } catch (error) {
@@ -80,11 +77,6 @@ export const EventsPage = () => {
         setShowModal(false);
     };
 
-    const handleAssignToEvent = () => {
-        alert("You are assigned");
-        setIsAssigned(true);
-    }
-
     const handleCardClick = (event) => {
         if (event.eventId) {
             setSelectedEvent(event);
@@ -111,12 +103,11 @@ export const EventsPage = () => {
                 return [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
             case 'price':
                 return [...events].sort((a, b) => {
-                    // Convert price string to a number, treat 'free' as 0 or another appropriate value
                     const getPriceValue = (price) => {
                         if (price.toLowerCase() === 'free') {
-                            return 0;  // Or another default value that makes sense for your application
+                            return 0;
                         }
-                        return parseFloat(price.replace(/\D/g, '')); // Remove non-numeric characters and parse
+                        return parseFloat(price.replace(/\D/g, ''));
                     };
 
                     let priceA = getPriceValue(a.price);

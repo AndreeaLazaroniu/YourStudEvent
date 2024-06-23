@@ -26,7 +26,7 @@ export const Events = () => {
     }, []);
 
     const handleSeeMore = () => {
-        navigate('/events'); // Navigate to the events page or a specific URL
+        navigate('/events');
     };
     const getFirstFiftyWords = (text) => {
         return text.split(/\s+/).slice(0, 5).join(" ") + "...";

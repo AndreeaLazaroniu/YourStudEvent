@@ -9,7 +9,6 @@ import {useAuth} from "../../AuthContext";
 import collage_events from "../../Assets/collage-events.png";
 
 export const Login = () => {
-    // const [Email, setEmail] = useState('');
     const [UserName, setUserName] = useState('');
     const [Password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -44,12 +43,10 @@ export const Login = () => {
 
             auth.login(response.data.token);
 
-            // Get the role of the user
             const roleResponse = await axios.get(`https://localhost:44317/api/account/getRole/${UserName}`);
 
             setRole(roleResponse.data);
 
-            // Navigate based on the role
             if(roleResponse.data === 'Student') {
                 navigate('/myProfileStud');
             } else if(roleResponse.data === 'Organizer') {

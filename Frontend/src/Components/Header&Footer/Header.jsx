@@ -31,7 +31,6 @@ export const Header = () => {
 
         setRole(roleResponse.data);
 
-        // Navigate based on the role
         if (roleResponse.data === 'Student') {
             navigate('/myProfileStud');
         } else if (roleResponse.data === 'Organizer') {

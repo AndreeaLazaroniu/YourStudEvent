@@ -18,7 +18,6 @@ export const MyEvents = () => {
     useEffect(() => {
         const fetchEventsAndImages = async () => {
             try {
-                // Fetch events
                 const eventResponse = await axios.get('https://localhost:44317/api/Events/GetEventsByOrg', {
                     headers: {
                         Authorization: `Bearer ${auth.user.token}`
@@ -26,7 +25,6 @@ export const MyEvents = () => {
                 });
                 const eventsData = eventResponse.data;
 
-                // Fetch images for each event and combine them with event data
                 const imagePaths = await Promise.all(eventsData.map(async (event) => {
                     try {
                         const imageResponse = await axios.get(`https://localhost:44317/api/content/getObjFile/${event.imageId}`, {
@@ -36,16 +34,15 @@ export const MyEvents = () => {
                         });
                         return {
                             ...event,
-                            imageUrl: `https://localhost:44317${imageResponse.data.path}` // Ensure you have the correct property for the path
+                            imageUrl: `https://localhost:44317${imageResponse.data.path}`
                         };
                     } catch (error) {
                         console.error(`Failed to fetch image for event ${event.id}:`, error);
-                        return { ...event, imageUrl: 'path_to_default_image.jpg' }; // Fallback image
+                        return { ...event, imageUrl: 'path_to_default_image.jpg' };
                     }
                 }));
 
                 console.log("Image paths and events combined: ", imagePaths);
-                // Update events state with images
                 setEvents(imagePaths);
 
             } catch (error) {

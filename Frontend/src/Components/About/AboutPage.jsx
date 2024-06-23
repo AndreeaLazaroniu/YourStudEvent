@@ -3,10 +3,9 @@ import { Container, Row, Col, Carousel, Card } from 'react-bootstrap';
 import about1 from '../../Assets/about1.jpg';
 import about2 from '../../Assets/about2.jpg';
 import about3 from '../../Assets/IMG_6920.jpg';
-import './AboutPage.css'; // Make sure to import the CSS file
+import './AboutPage.css';
 
 export const AboutPage = () => {
-    // Sample data for the gallery and reviews
     const galleryImages = [
         { about1 },
         { about2 },

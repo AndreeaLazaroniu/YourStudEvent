@@ -5,7 +5,6 @@ import {Testimonials} from './Sections/Testimonials';
 import {Start} from './Sections/Start';
 import './home.css';
 import React from 'react';
-import collage_events from "../../Assets/collage-events.png";
 
 export const Home = () => {
     return (

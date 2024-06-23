@@ -162,7 +162,6 @@ public class AccountController : ControllerBase
         return users;
     }
     
-    // [Authorize]
     [HttpDelete("deleteAccount")]
     public async Task<IActionResult> DeleteUser()
     {
@@ -183,7 +182,6 @@ public class AccountController : ControllerBase
         return Ok();
     }
     
-    // [Authorize]
     [HttpGet("GetOneUser")]
     public async Task<UserDto?> GetUser()
     {
@@ -198,7 +196,6 @@ public class AccountController : ControllerBase
         return user;
     }
     
-    // [Authorize]
     [HttpPut("updateAccount")]
     public async Task<AppUser> UpdateUser([FromBody] UserDto user)
     {
@@ -239,12 +236,9 @@ public class AccountController : ControllerBase
         } else return null;
     }
     
-    // [Authorize]
     [HttpGet("getRole")]
-    public async Task<string> GetRole(/*string userNAme*/)
+    public async Task<string> GetRole()
     {
-        // var user = await _userManager.FindByNameAsync(userNAme);
-        
         var email = User.FindFirstValue(ClaimTypes.Email);
         if (string.IsNullOrEmpty(email))
         {

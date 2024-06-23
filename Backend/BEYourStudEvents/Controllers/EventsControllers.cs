@@ -34,10 +34,8 @@ public class EventsControllers : ControllerBase
         var events = await _eventService.GetEventsAsync();
         
         return events;
-        //return Ok(events);
     }
     
-    // [Authorize]
     [HttpGet("GetEventsByOrg")]
     public async Task<IEnumerable<EventDto>> GetEventsByOrg()
     {
@@ -82,13 +80,12 @@ public class EventsControllers : ControllerBase
         return Ok(students);
     }
     
-    // [Authorize]
     [HttpPost("CreateEvent")]
     public async Task<IActionResult> CreateEvent([FromBody]EventCreateDto eventDto)
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState); // This will return what part of the model is invalid
+            return BadRequest(ModelState);
         }
         
         var email = User.FindFirstValue(ClaimTypes.Email);
@@ -151,13 +148,12 @@ public class EventsControllers : ControllerBase
         return Ok(updatedEvent);
     }
     
-    // [Authorize]
     [HttpPost("AddStudent/{eventId}")]
     public async Task<ActionResult<UserDto>> AddStudent(int eventId)
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState); // This will return what part of the model is invalid
+            return BadRequest(ModelState);
         }
         
         var email = User.FindFirstValue(ClaimTypes.Email);

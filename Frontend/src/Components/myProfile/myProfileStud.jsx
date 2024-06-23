@@ -27,7 +27,6 @@ export const MyProfileStud = () => {
             setUser(response.data);
         } catch (error) {
             console.error('Failed to fetch user data:', error);
-            // Optionally handle the error (e.g., show a notification)
         }
     };
 
@@ -43,12 +42,11 @@ export const MyProfileStud = () => {
                 }
             });
             if (response.status === 200) {
-                fetchUserProfile();  // Reload the updated data
+                fetchUserProfile();
                 setEditMode(false);
             }
         } catch (error) {
             console.error('Failed to update user data:', error);
-            // Optionally handle the error
         }
     };
 
@@ -60,11 +58,9 @@ export const MyProfileStud = () => {
         try {
             const response = await axios.delete('https://localhost:44317/api/account/deleteAccount');
             if (response.status === 200) {
-                // Handle user deletion (maybe redirect or clear user state)
             }
         } catch (error) {
             console.error('Failed to delete user account:', error);
-            // Optionally handle the error
         }
     };
 
